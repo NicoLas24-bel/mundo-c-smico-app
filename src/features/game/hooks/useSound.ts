@@ -1,4 +1,4 @@
-import { useAudioPlayer } from 'expo-audio';
+import { createAudioPlayer } from 'expo-audio';
 
 import { getSettings } from '../../settings/utils/settings';
 
@@ -12,20 +12,28 @@ const soundAplausos = require('../../../../assets/audio/aplausos.mp3');
 const soundButton   = require('../../../../assets/audio/botones.mp3');
 
 /**
- * Hook que proporciona efectos de sonido para el juego.
- * Usa expo-audio SDK 57 (useAudioPlayer).
+ * Reproductores de efectos de sonido.
+ *
+ * Se crean una sola vez a nivel de módulo (createAudioPlayer) para que
+ * persistan durante toda la vida de la app, evitando recrear decenas de
+ * reproductores por pantalla y eliminando el riesgo de usar un player
+ * liberado tras desmontar una vista.
+ */
+const levelCompletePlayer = createAudioPlayer(soundLevelComplete);
+const selectCorrectPlayer = createAudioPlayer(soundSelectCorrect);
+const errorPlayer         = createAudioPlayer(soundError);
+const gameOverPlayer      = createAudioPlayer(soundGameOver);
+const winPlayer           = createAudioPlayer(soundWin);
+const aplausosPlayer      = createAudioPlayer(soundAplausos);
+const buttonPlayer        = createAudioPlayer(soundButton);
+
+const isSoundEnabled = () => getSettings().soundEnabled;
+
+/**
+ * Efectos de sonido del juego (singleton).
+ * Consume la configuración global de sonido en cada reproducción.
  */
 export const useSound = () => {
-  const levelCompletePlayer = useAudioPlayer(soundLevelComplete);
-  const selectCorrectPlayer = useAudioPlayer(soundSelectCorrect);
-  const errorPlayer         = useAudioPlayer(soundError);
-  const gameOverPlayer      = useAudioPlayer(soundGameOver);
-  const winPlayer           = useAudioPlayer(soundWin);
-  const aplausosPlayer      = useAudioPlayer(soundAplausos);
-  const buttonPlayer        = useAudioPlayer(soundButton);
-
-  const isSoundEnabled = () => getSettings().soundEnabled;
-
   const playLevelComplete = () => {
     if (!isSoundEnabled()) return;
     try {
@@ -65,19 +73,22 @@ export const useSound = () => {
   const playWin = () => {
     if (!isSoundEnabled()) return;
     try {
-      winPlayer.volume = 0.8;
+      // Detener aplausos previos si seguían sonando
+      aplausosPlayer.pause();
       winPlayer.seekTo(0);
       winPlayer.play();
 
-      // Después de 3 segundos, parar el sonido de victoria y poner aplausos
-      setTimeout(() => {
-        try {
-          winPlayer.pause();
-          aplausosPlayer.volume = 0.75;
-          aplausosPlayer.seekTo(0);
-          aplausosPlayer.play();
-        } catch (e) {}
-      }, 3000);
+      // Al terminar el sonido de victoria, encadenar los aplausos
+      const subscription = winPlayer.addListener('playbackStatusUpdate', (status) => {
+        if (status.didJustFinish) {
+          subscription.remove();
+          try {
+            aplausosPlayer.volume = 0.75;
+            aplausosPlayer.seekTo(0);
+            aplausosPlayer.play();
+          } catch (e) {}
+        }
+      });
     } catch (e) {}
   };
 
