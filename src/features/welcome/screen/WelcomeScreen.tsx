@@ -7,7 +7,7 @@ import { useColorScheme } from '@/shared/hooks/useColorScheme';
 import { AppText } from '@/shared/components/ui/AppText';
 
 import { WelcomeButton } from '../components/WelcomeButton';
-import { welcomeStyles as styles } from '../welcome.styles';
+import { welcomeStyles as styles } from '../style/welcome.styles';
 
 export function WelcomeScreen() {
   const { colors } = useColorScheme();
@@ -16,7 +16,6 @@ export function WelcomeScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <SafeAreaView style={styles.safeArea}>
-        {/* Badge */}
         <View
           style={[
             styles.badge,
@@ -30,12 +29,10 @@ export function WelcomeScreen() {
           </AppText>
         </View>
 
-        {/* Headline */}
         <AppText variant="display" style={styles.title}>
           Bienvenido
         </AppText>
 
-        {/* Subtitle */}
         <AppText
           variant="subtitle"
           style={styles.subtitle}
@@ -44,18 +41,15 @@ export function WelcomeScreen() {
           Tu punto de partida hacia una nueva experiencia
         </AppText>
 
-        {/* Actions */}
         <View style={styles.actionsContainer}>
           <WelcomeButton
             label="Comenzar"
             variant="primary"
             onPress={navigate.toDashboard}
           />
-          <WelcomeButton label="Saber más" variant="secondary" />
         </View>
       </SafeAreaView>
 
-      {/* Footer */}
       <AppText variant="caption" style={styles.footer} color={colors.textSecondary}>
         v1.0.0
       </AppText>

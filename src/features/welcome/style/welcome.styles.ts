@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Spacing, Radius, FontSize, FontWeight } from '@/shared/theme';
+import { Spacing, Radius, FontSize, FontWeight,  } from '@/shared/theme';
 
 export const welcomeStyles = StyleSheet.create({
   container: {
@@ -37,9 +37,10 @@ export const welcomeStyles = StyleSheet.create({
   },
   actionsContainer: {
     marginTop: Spacing.lg,
-    gap: Spacing.sm,
+    borderRadius: Radius.full,
     alignSelf: 'stretch',
-    maxWidth: 320,
+    alignItems: 'center',
+
   },
   footer: {
     position: 'absolute',
