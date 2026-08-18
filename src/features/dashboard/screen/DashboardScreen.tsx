@@ -11,7 +11,7 @@ import { GameStatus } from '../../game/components/GameStatus';
 import { GameFeedback } from '../../game/components/GameFeedback';
 import { GameTimer } from '../../game/components/GameTimer';
 import { InstructionsModal } from '../../game/components/InstructionsModal';
-import { RotateCcw, ArrowRight, Home as HomeIcon, Trophy, Star, Frown } from 'lucide-react-native';
+import { RotateCcw, ArrowRight, Home as HomeIcon, Trophy, Star, Frown, ArrowLeft } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 function AnimatedStars() {
@@ -72,6 +72,11 @@ export function DashboardScreen() {
     restartGame
   } = useGameState();
 
+  const handleBack = () => {
+    playButton();
+    navigate.toMenu();
+  };
+
   useEffect(() => {
     if (isLevelComplete && !isGameComplete) {
       const timer = setTimeout(() => {
@@ -90,10 +95,10 @@ export function DashboardScreen() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        
+
         {/* Scrollable container for smaller screens if needed */}
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          
+
           <GameStatus
             levelName={currentLevel.name}
             levelIndex={currentLevelIndex}
@@ -106,7 +111,7 @@ export function DashboardScreen() {
           <View style={styles.gameLayout}>
             <View style={styles.boardContainer}>
               <GameTimer timeLeft={timeLeft} maxTime={60} />
-              
+
               <GameBoard
                 level={currentLevel}
                 foundObjects={foundObjects}
@@ -137,20 +142,27 @@ export function DashboardScreen() {
             <Text style={styles.overlaySubtitle}>Great job! You found all the objects.</Text>
 
             {showNextLevelBtn && (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => { playButton(); nextLevel(); }}
-              >
-                <LinearGradient
-                  colors={['#6366f1', '#a855f7']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.actionButton}
+              <View style={styles.overlayActions}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => { playButton(); nextLevel(); }}
                 >
-                  <Text style={styles.actionButtonText}>Next Level</Text>
-                  <ArrowRight color="white" size={24} />
-                </LinearGradient>
-              </TouchableOpacity>
+                  <LinearGradient
+                    colors={['#6366f1', '#a855f7']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.actionButton}
+                  >
+                    <Text style={styles.actionButtonText}>Next Level</Text>
+                    <ArrowRight color="white" size={24} />
+                  </LinearGradient>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={handleBack} activeOpacity={0.7} style={styles.backButton}>
+                  <ArrowLeft color="#cbd5e1" size={18} />
+                  <Text style={styles.backButtonText}>Volver al menú</Text>
+                </TouchableOpacity>
+              </View>
             )}
           </View>
         )}
@@ -164,7 +176,7 @@ export function DashboardScreen() {
             >
               <Trophy color="white" size={48} />
             </LinearGradient>
-            
+
             <Text style={styles.overlayTitle}>You Won! 🏆</Text>
             <Text style={styles.overlaySubtitle}>Amazing! You completed all {totalLevels} levels!</Text>
             <Text style={styles.overlayText}>You are an English vocabulary champion.</Text>
@@ -308,6 +320,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '900',
   },
+  overlayActions: {
+    width: '100%',
+    alignItems: 'center',
+    gap: 14,
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderColor: 'rgba(255,255,255,0.15)',
+    borderWidth: 1,
+  },
+  backButtonText: {
+    color: '#cbd5e1',
+    fontSize: 16,
+    fontWeight: '700',
+  },
   trophyContainer: {
     width: 80,
     height: 80,
@@ -358,5 +391,5 @@ const styles = StyleSheet.create({
     color: '#e2e8f0',
     fontSize: 16,
     fontWeight: 'bold',
-  }
+  },
 });
