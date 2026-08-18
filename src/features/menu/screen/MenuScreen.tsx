@@ -16,23 +16,23 @@ const DIFFICULTY: any = {
 };
 
 export function MenuScreen() {
-  const { playButton } = useSound();
-  const [unlockedLevelIndex, setUnlockedLevelIndex] = useState(0);
+    const { playButton } = useSound();
+    const [unlockedLevelIndex, setUnlockedLevelIndex] = useState(0);
 
-  // Refresh progress every time the menu regains focus (e.g. back from a level)
-  useFocusEffect(
-    useCallback(() => {
-      let active = true;
-      loadProgress().then((saved) => {
-        if (active) {
-          setUnlockedLevelIndex(saved?.unlockedLevelIndex ?? 0);
-        }
-      });
-      return () => {
-        active = false;
-      };
-    }, [])
-  );
+    // Refrescar el progreso cada vez que el menú vuelve a tener foco (ej. al volver de un nivel)
+    useFocusEffect(
+        useCallback(() => {
+            let active = true;
+            loadProgress().then((saved) => {
+                if (active) {
+                    setUnlockedLevelIndex(saved?.unlockedLevelIndex ?? 0);
+                }
+            });
+            return () => {
+                active = false;
+            };
+        }, [])
+    );
 
     const handleSelectLevel = (levelIndex: number) => {
         playButton();
@@ -60,9 +60,9 @@ export function MenuScreen() {
                         <ChevronLeft color="white" size={24} />
                     </TouchableOpacity>
                     <View style={styles.headerCenter}>
-                        <Text style={styles.title}>ELIGE TU NIVEL</Text>
+                        <Text style={styles.title}> Elige un nivel</Text>
                         <Text style={styles.subtitle}>
-                            {unlockedLevelIndex + 1} de {levels.length} niveles disponibles
+                            {unlockedLevelIndex + 1} de {levels.length} niveles superados ¡Genial!
                         </Text>
                     </View>
                     <View style={styles.headerSpacer} />
@@ -158,9 +158,6 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 14,
-        backgroundColor: 'rgba(255,255,255,0.08)',
-        borderColor: 'rgba(255,255,255,0.1)',
-        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -176,6 +173,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '900',
         letterSpacing: 1,
+        textAlign: 'center',
+        textTransform: 'uppercase',
     },
     subtitle: {
         color: '#94a3b8',
@@ -187,6 +186,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingBottom: 32,
         gap: 12,
+        paddingTop: 20,
     },
     card: {
         flexDirection: 'row',
@@ -194,7 +194,6 @@ const styles = StyleSheet.create({
         gap: 14,
         padding: 12,
         borderRadius: 16,
-        backgroundColor: 'rgba(255,255,255,0.05)',
         borderColor: 'rgba(255,255,255,0.08)',
         borderWidth: 1,
     },
