@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, BackHandler, Platform } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, BackHandler, Platform, Animated, Easing } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PlayCircle, Settings, LogOut } from 'lucide-react-native';
@@ -8,6 +8,42 @@ import { useSound } from '../../game/hooks/useSound';
 
 export function WelcomeScreen() {
   const { playButton } = useSound();
+  const pulse = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const heartbeat = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, {
+          toValue: 1.18,
+          duration: 220,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulse, {
+          toValue: 1,
+          duration: 220,
+          easing: Easing.in(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.delay(550),
+        Animated.timing(pulse, {
+          toValue: 1.08,
+          duration: 180,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulse, {
+          toValue: 1,
+          duration: 180,
+          easing: Easing.in(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.delay(700),
+      ])
+    );
+    heartbeat.start();
+    return () => heartbeat.stop();
+  }, [pulse]);
 
   const handleStart = () => {
     playButton();
@@ -44,13 +80,22 @@ export function WelcomeScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.logoCircle}
           >
-            <Text style={styles.logoEmoji}>🌍</Text>
+            <Animated.Text
+              style={[
+                styles.logoEmoji,
+                {
+                  transform: [{ scale: pulse }],
+                },
+              ]}
+            >
+              🌍
+            </Animated.Text>
           </LinearGradient>
         </View>
 
         {/* Company badge */}
         <View style={styles.badgeContainer}>
-          <Text style={styles.badgeText}>MundoMagico</Text>
+          <Text style={styles.badgeText}>MundoMagico.cl</Text>
         </View>
 
         {/* Title */}
@@ -136,6 +181,7 @@ const styles = StyleSheet.create({
   },
   logoEmoji: {
     fontSize: 52,
+    
   },
   badgeContainer: {
     alignItems: 'center',
