@@ -32,7 +32,7 @@ const CONFIG: any = {
 
 export const GameFeedback = ({ feedback }: any) => {
   const opacity = useRef(new Animated.Value(0)).current;
-  const translateY = useRef(new Animated.Value(20)).current;
+  const translateY = useRef(new Animated.Value(-20)).current;
 
   useEffect(() => {
     if (feedback.message) {
@@ -50,7 +50,7 @@ export const GameFeedback = ({ feedback }: any) => {
       ]).start();
     } else {
       opacity.setValue(0);
-      translateY.setValue(20);
+      translateY.setValue(-20);
     }
   }, [feedback.message]);
 
@@ -86,11 +86,11 @@ export const GameFeedback = ({ feedback }: any) => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 40,
+    top: 80,
     alignSelf: 'center',
     zIndex: 50,
     shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.9,
     shadowRadius: 15,
     elevation: 10,
   },

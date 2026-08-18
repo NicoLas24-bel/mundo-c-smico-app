@@ -24,6 +24,15 @@ export const useGameState = () => {
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [feedback, setFeedback] = useState({ message: '', type: '' });
 
+  // Auto-dismiss feedback after a few seconds
+  useEffect(() => {
+    if (!feedback.message) return;
+    const timer = setTimeout(() => {
+      setFeedback({ message: '', type: '' });
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [feedback.message]);
+
   // Timer and Play state
   const [timeLeft, setTimeLeft] = useState(60);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -143,7 +152,7 @@ export const useGameState = () => {
     setSelectedWord(null);
     setFeedback({ message: '', type: '' });
     setTimeLeft(60);
-    setIsPlaying(false); // Show modal again when restarting
+    setIsPlaying(false);
     setIsGameOver(false);
   };
 

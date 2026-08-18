@@ -16,10 +16,10 @@ export const GameStatus = ({ levelName, levelIndex, totalLevels, errors, progres
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        
-        {/* Left: Level info */}
-        <View style={styles.leftInfo}>
+
+      {/* Row 1: Level info (title truncates, difficulty pinned on the right) */}
+      <View style={styles.headerRow}>
+        <View style={styles.levelGroup}>
           <LinearGradient
             colors={['rgba(99,102,241,0.3)', 'rgba(168,85,247,0.3)']}
             start={{ x: 0, y: 0 }}
@@ -31,51 +31,57 @@ export const GameStatus = ({ levelName, levelIndex, totalLevels, errors, progres
             <Text style={styles.levelBadgeTextTotal}>/ {totalLevels}</Text>
           </LinearGradient>
 
-          <Text style={styles.levelName}>{levelName}</Text>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={styles.levelName}
+          >
+            {levelName}
+          </Text>
+        </View>
 
-          <View style={[styles.diffBadge, { backgroundColor: diff.bg, borderColor: diff.border }]}>
-            <Text style={[styles.diffText, { color: diff.text }]}>{diff.label}</Text>
+        <View style={[styles.diffBadge, { backgroundColor: diff.bg, borderColor: diff.border }]}>
+          <Text style={[styles.diffText, { color: diff.text }]}>{diff.label}</Text>
+        </View>
+      </View>
+
+      {/* Row 2: Status (LIVES + divider + PROGRESS) */}
+      <View style={styles.statusRow}>
+
+        <View style={styles.heartsContainer}>
+          <Text style={styles.labelText}>LIVES</Text>
+          <View style={styles.heartsRow}>
+            {[...Array(maxErrors)].map((_, i) => (
+              <Heart
+                key={i}
+                size={24}
+                color={i < remainingHearts ? '#f43f5e' : '#334155'}
+                fill={i < remainingHearts ? '#f43f5e' : '#334155'}
+                style={styles.heartIcon}
+              />
+            ))}
           </View>
         </View>
 
-        {/* Right: Hearts + Progress */}
-        <View style={styles.rightInfo}>
-          
-          <View style={styles.heartsContainer}>
-            <Text style={styles.labelText}>LIVES</Text>
-            <View style={styles.heartsRow}>
-              {[...Array(maxErrors)].map((_, i) => (
-                <Heart
-                  key={i}
-                  size={24}
-                  color={i < remainingHearts ? '#f43f5e' : '#334155'}
-                  fill={i < remainingHearts ? '#f43f5e' : '#334155'}
-                  style={styles.heartIcon}
-                />
-              ))}
-            </View>
+        <View style={styles.divider} />
+
+        <View style={styles.progressContainer}>
+          <View style={styles.progressHeader}>
+            <Text style={styles.labelText}>PROGRESS</Text>
+            <Text style={styles.progressVal}>{Math.round(progress)}%</Text>
           </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.progressContainer}>
-            <View style={styles.progressHeader}>
-              <Text style={styles.labelText}>PROGRESS</Text>
-              <Text style={styles.progressVal}>{Math.round(progress)}%</Text>
-            </View>
-            <View style={styles.progressBarBg}>
-              <LinearGradient
-                colors={['#6366f1', '#a855f7']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={[styles.progressBarFill, { width: `${progress}%` }]}
-              />
-            </View>
+          <View style={styles.progressBarBg}>
+            <LinearGradient
+              colors={['#6366f1', '#a855f7']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[styles.progressBarFill, { width: `${progress}%` }]}
+            />
           </View>
-
         </View>
 
       </View>
+
     </View>
   );
 };
@@ -84,24 +90,26 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
     borderRadius: 16,
-    padding: 15,
+    padding: 14,
     borderColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
-    marginBottom: 20,
+    marginBottom: 15,
     width: '100%',
+    alignSelf: 'stretch',
+    overflow: 'hidden',
+    gap: 14,
   },
-  row: {
+  headerRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 16,
+    gap: 14,
   },
-  leftInfo: {
+  levelGroup: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    flexWrap: 'wrap',
+    minWidth: 0,
   },
   levelBadge: {
     flexDirection: 'row',
@@ -130,32 +138,37 @@ const styles = StyleSheet.create({
   },
   levelName: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '900',
+    flex: 1,
+    minWidth: 0,
   },
   diffBadge: {
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 8,
     borderWidth: 1,
+    flexShrink: 0,
   },
   diffText: {
     fontSize: 10,
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
-  rightInfo: {
+  statusRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    justifyContent: 'space-between',
+    gap: 24,
   },
   heartsContainer: {
     alignItems: 'center',
-    gap: 4,
+    gap: 6,
+    flexShrink: 0,
   },
   heartsRow: {
     flexDirection: 'row',
-    gap: 4,
+    gap: 6,
   },
   heartIcon: {
     marginHorizontal: 2,
@@ -163,11 +176,13 @@ const styles = StyleSheet.create({
   divider: {
     width: 1,
     height: 40,
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    flexShrink: 0,
   },
   progressContainer: {
-    minWidth: 120,
-    gap: 6,
+    flex: 1,
+    gap: 8,
+    minWidth: 0,
   },
   progressHeader: {
     flexDirection: 'row',
