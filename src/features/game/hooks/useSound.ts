@@ -1,5 +1,7 @@
 import { useAudioPlayer } from 'expo-audio';
 
+import { getSettings } from '../../settings/utils/settings';
+
 // Importar audios
 const soundLevelComplete = require('../../../../assets/audio/siguiente-nivel.mp3');
 const soundSelectCorrect = require('../../../../assets/audio/seleccion-correcta.mp3');
@@ -22,7 +24,10 @@ export const useSound = () => {
   const aplausosPlayer      = useAudioPlayer(soundAplausos);
   const buttonPlayer        = useAudioPlayer(soundButton);
 
+  const isSoundEnabled = () => getSettings().soundEnabled;
+
   const playLevelComplete = () => {
+    if (!isSoundEnabled()) return;
     try {
       levelCompletePlayer.volume = 0.7;
       levelCompletePlayer.seekTo(0);
@@ -31,6 +36,7 @@ export const useSound = () => {
   };
 
   const playSelectCorrect = () => {
+    if (!isSoundEnabled()) return;
     try {
       selectCorrectPlayer.volume = 0.7;
       selectCorrectPlayer.seekTo(0);
@@ -39,6 +45,7 @@ export const useSound = () => {
   };
 
   const playError = () => {
+    if (!isSoundEnabled()) return;
     try {
       errorPlayer.volume = 0.6;
       errorPlayer.seekTo(0);
@@ -47,6 +54,7 @@ export const useSound = () => {
   };
 
   const playGameOver = () => {
+    if (!isSoundEnabled()) return;
     try {
       gameOverPlayer.volume = 0.7;
       gameOverPlayer.seekTo(0);
@@ -55,6 +63,7 @@ export const useSound = () => {
   };
 
   const playWin = () => {
+    if (!isSoundEnabled()) return;
     try {
       winPlayer.volume = 0.8;
       winPlayer.seekTo(0);
@@ -73,6 +82,7 @@ export const useSound = () => {
   };
 
   const playButton = () => {
+    if (!isSoundEnabled()) return;
     try {
       buttonPlayer.volume = 0.5;
       buttonPlayer.seekTo(0);

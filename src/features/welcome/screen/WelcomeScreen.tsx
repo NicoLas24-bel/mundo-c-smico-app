@@ -1,16 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, BackHandler, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import { PlayCircle, Settings, LogOut } from 'lucide-react-native';
 import { navigate } from '@/router';
 import { useSound } from '../../game/hooks/useSound';
-import { LinearGradient } from 'expo-linear-gradient';
-import { PlayCircle, BookOpen, Star, Zap, Target } from 'lucide-react-native';
-
-const FEATURES = [
-  { icon: BookOpen, label: 'Many levels', desc: 'Progressive difficulty' },
-  { icon: Target, label: 'Visual Match', desc: 'Click on the scene' },
-  { icon: Zap, label: 'Instant Feedback', desc: 'Learn from mistakes' },
-];
 
 export function WelcomeScreen() {
   const { playButton } = useSound();
@@ -20,24 +14,58 @@ export function WelcomeScreen() {
     navigate.toMenu();
   };
 
+  const handleSettings = () => {
+    playButton();
+    navigate.toSettings();
+  };
+
+  const handleExit = () => {
+    playButton();
+    if (Platform.OS !== 'web') {
+      BackHandler.exitApp();
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <LinearGradient
+        colors={['#1e1b4b', '#0f172a', '#0f172a']}
+        locations={[0, 0.5, 1]}
+        style={styles.background}
+      />
+
       <SafeAreaView style={styles.safeArea}>
 
-        {/* Hero Card */}
-        <View>
-          {/* Title */}
-          <View style={styles.titleContainer}>
-            <Text style={styles.emoji}>🌍</Text>
-            <Text style={styles.title}>Aprende Inglés Jugando</Text>
-            <Text style={styles.subtitle}>Juego Educativo para Todos</Text>
-          </View>
+        {/* Logo */}
+        <View style={styles.logoContainer}>
+          <LinearGradient
+            colors={['#6366f1', '#a855f7']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.logoCircle}
+          >
+            <Text style={styles.logoEmoji}>🌍</Text>
+          </LinearGradient>
+        </View>
 
-          <Text style={styles.description}>
-            Selecciona una palabra, luego toca la imagen para encontrar el objeto correcto.
-          </Text>
+        {/* Company badge */}
+        <View style={styles.badgeContainer}>
+          <Text style={styles.badgeText}>MundoMagico</Text>
+        </View>
 
-          {/* Start Button */}
+        {/* Title */}
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Aprende Inglés Jugando</Text>
+          <Text style={styles.subtitle}>Juego educativo para todos</Text>
+        </View>
+
+        <Text style={styles.description}>
+          Selecciona una palabra y toca la imagen para encontrar el objeto correcto.
+        </Text>
+
+        {/* Menu buttons */}
+        <View style={styles.menu}>
+
           <TouchableOpacity activeOpacity={0.8} onPress={handleStart} style={styles.buttonWrapper}>
             <LinearGradient
               colors={['#6366f1', '#a855f7']}
@@ -45,16 +73,32 @@ export function WelcomeScreen() {
               end={{ x: 1, y: 1 }}
               style={styles.button}
             >
-              <PlayCircle color="white" size={28} />
+              <PlayCircle color="white" size={26} />
               <Text style={styles.buttonText}>COMENZAR</Text>
             </LinearGradient>
           </TouchableOpacity>
 
-          <Text style={styles.footerText}>
-            Free to play
-          </Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handleSettings}
+            style={[styles.buttonWrapper, styles.outlineButton]}
+          >
+            <Settings color="#c4b5fd" size={24} />
+            <Text style={styles.outlineButtonText}>CONFIGURACIONES</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handleExit}
+            style={[styles.buttonWrapper, styles.exitButton]}
+          >
+            <LogOut color="#f87171" size={24} />
+            <Text style={styles.exitButtonText}>SALIR</Text>
+          </TouchableOpacity>
 
         </View>
+
+        <Text style={styles.footerText}>© MundoMagico · Juego gratuito</Text>
 
       </SafeAreaView>
     </View>
@@ -66,47 +110,62 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0f172a',
   },
+  background: {
+    ...StyleSheet.absoluteFill,
+  },
   safeArea: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
+  },
+  logoContainer: {
+    marginBottom: 20,
+  },
+  logoCircle: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#a855f7',
+    shadowOpacity: 0.45,
+    shadowRadius: 24,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 12,
+  },
+  logoEmoji: {
+    fontSize: 52,
   },
   badgeContainer: {
     alignItems: 'center',
-    marginBottom: 24,
-  },
-  badge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
     paddingVertical: 8,
     borderRadius: 20,
-    borderColor: 'rgba(99,102,241,0.5)',
+    backgroundColor: 'rgba(168,85,247,0.12)',
+    borderColor: 'rgba(168,85,247,0.4)',
     borderWidth: 1,
-    gap: 8,
+    marginBottom: 20,
   },
   badgeText: {
-    color: '#a5b4fc',
-    fontSize: 14,
-    fontWeight: 'bold',
+    color: '#e9d5ff',
+    fontSize: 15,
+    fontWeight: '800',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
   },
   titleContainer: {
     alignItems: 'center',
     marginBottom: 16,
   },
-  emoji: {
-    fontSize: 64,
-    marginBottom: 8,
-  },
   title: {
-    fontSize: 40,
+    fontSize: 38,
     fontWeight: '900',
     color: 'white',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     color: '#a855f7',
     marginTop: 8,
@@ -115,44 +174,26 @@ const styles = StyleSheet.create({
   description: {
     textAlign: 'center',
     color: '#cbd5e1',
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 32,
+    fontSize: 15,
+    lineHeight: 22,
+    marginBottom: 40,
+    maxWidth: 320,
   },
-  featuresContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 12,
-    marginBottom: 32,
-  },
-  featureItem: {
-    flexDirection: 'row',
+  menu: {
+    width: '100%',
+    maxWidth: 320,
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.07)',
-    borderColor: 'rgba(255,255,255,0.1)',
-    borderWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 16,
-    gap: 12,
-  },
-  featureLabel: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-  featureDesc: {
-    color: '#94a3b8',
-    fontSize: 12,
+    gap: 14,
   },
   buttonWrapper: {
+    width: '100%',
     alignItems: 'center',
   },
   button: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 40,
+    justifyContent: 'center',
     paddingVertical: 16,
     borderRadius: 20,
     gap: 12,
@@ -162,11 +203,43 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '900',
   },
+  outlineButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    borderRadius: 20,
+    gap: 12,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderColor: 'rgba(196,181,253,0.35)',
+    borderWidth: 1,
+  },
+  outlineButtonText: {
+    color: '#c4b5fd',
+    fontSize: 18,
+    fontWeight: '800',
+  },
+  exitButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    borderRadius: 20,
+    gap: 12,
+    backgroundColor: 'rgba(239,68,68,0.08)',
+    borderColor: 'rgba(239,68,68,0.35)',
+    borderWidth: 1,
+  },
+  exitButtonText: {
+    color: '#f87171',
+    fontSize: 18,
+    fontWeight: '800',
+  },
   footerText: {
     textAlign: 'center',
     color: '#64748b',
     fontSize: 12,
-    marginTop: 24,
+    marginTop: 40,
     fontWeight: '600',
-  }
+  },
 });
