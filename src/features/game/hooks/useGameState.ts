@@ -11,6 +11,11 @@ export const useGameState = () => {
     return saved?.currentLevelIndex ?? 0;
   });
 
+  const [unlockedLevelIndex, setUnlockedLevelIndex] = useState(() => {
+    const saved = loadProgress();
+    return saved?.unlockedLevelIndex ?? 0;
+  });
+
   const [errors, setErrors] = useState(() => {
     const saved = loadProgress();
     return saved?.errors ?? 0;
@@ -50,8 +55,9 @@ export const useGameState = () => {
       currentLevelIndex,
       errors,
       foundObjects,
+      unlockedLevelIndex,
     });
-  }, [currentLevelIndex, errors, foundObjects]);
+  }, [currentLevelIndex, errors, foundObjects, unlockedLevelIndex]);
 
   const restartLevel = useCallback(() => {
     setErrors(0);
@@ -109,6 +115,8 @@ export const useGameState = () => {
         if (currentLevelIndex === levels.length - 1) {
           playWin();
         } else {
+          // Unlock the next level sequentially
+          setUnlockedLevelIndex((prev: number) => Math.max(prev, currentLevelIndex + 1));
           playLevelComplete();
         }
         setFeedback({ message: '', type: '' });
@@ -147,6 +155,7 @@ export const useGameState = () => {
   const restartGame = () => {
     clearProgress();
     setCurrentLevelIndex(0);
+    setUnlockedLevelIndex(0);
     setErrors(0);
     setFoundObjects([]);
     setSelectedWord(null);
@@ -159,6 +168,7 @@ export const useGameState = () => {
   return {
     currentLevel,
     currentLevelIndex,
+    unlockedLevelIndex,
     totalLevels: levels.length,
     errors,
     foundObjects,
