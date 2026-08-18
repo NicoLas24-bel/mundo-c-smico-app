@@ -17,7 +17,7 @@ export function WelcomeScreen() {
 
   const handleStart = () => {
     playButton();
-    navigate.toDashboard();
+    navigate.toMenu();
   };
 
   return (
