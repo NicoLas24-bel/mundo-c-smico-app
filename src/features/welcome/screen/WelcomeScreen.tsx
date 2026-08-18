@@ -23,49 +23,19 @@ export function WelcomeScreen() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        
-        {/* Hero Card */}
-        <View style={styles.card}>
-          
-          {/* Badge */}
-          <View style={styles.badgeContainer}>
-            <LinearGradient
-              colors={['rgba(99,102,241,0.3)', 'rgba(168,85,247,0.3)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.badge}
-            >
-              <Star color="#a5b4fc" size={16} fill="#a5b4fc" />
-              <Text style={styles.badgeText}>Free Educational Game</Text>
-            </LinearGradient>
-          </View>
 
+        {/* Hero Card */}
+        <View>
           {/* Title */}
           <View style={styles.titleContainer}>
             <Text style={styles.emoji}>🌍</Text>
-            <Text style={styles.title}>Learn English</Text>
-            <Text style={styles.subtitle}>Through Visual Association</Text>
+            <Text style={styles.title}>Aprende Inglés Jugando</Text>
+            <Text style={styles.subtitle}>Juego Educativo para Todos</Text>
           </View>
 
           <Text style={styles.description}>
-            Select a word, then find the matching object in the scene. Progress through exciting locations!
+            Selecciona una palabra, luego toca la imagen para encontrar el objeto correcto.
           </Text>
-
-          {/* Features */}
-          <View style={styles.featuresContainer}>
-            {FEATURES.map((f, i) => {
-              const Icon = f.icon;
-              return (
-                <View key={i} style={styles.featureItem}>
-                  <Icon color="#818cf8" size={24} />
-                  <View>
-                    <Text style={styles.featureLabel}>{f.label}</Text>
-                    <Text style={styles.featureDesc}>{f.desc}</Text>
-                  </View>
-                </View>
-              );
-            })}
-          </View>
 
           {/* Start Button */}
           <TouchableOpacity activeOpacity={0.8} onPress={handleStart} style={styles.buttonWrapper}>
@@ -76,12 +46,12 @@ export function WelcomeScreen() {
               style={styles.button}
             >
               <PlayCircle color="white" size={28} />
-              <Text style={styles.buttonText}>START GAME</Text>
+              <Text style={styles.buttonText}>COMENZAR</Text>
             </LinearGradient>
           </TouchableOpacity>
 
           <Text style={styles.footerText}>
-            No registration required · Progress saved in session
+            Free to play
           </Text>
 
         </View>
@@ -101,15 +71,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
-  },
-  card: {
-    width: '100%',
-    maxWidth: 600,
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderRadius: 32,
-    padding: 30,
-    borderColor: 'rgba(255,255,255,0.12)',
-    borderWidth: 1,
   },
   badgeContainer: {
     alignItems: 'center',

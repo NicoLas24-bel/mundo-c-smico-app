@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import { Play } from 'lucide-react-native';
+import { Play, ArrowLeft } from 'lucide-react-native';
+import { router } from 'expo-router';
 import { useSound } from '../hooks/useSound';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -12,6 +13,11 @@ export const InstructionsModal = ({ onStart }: any) => {
     playButton();
     setIsOpen(false);
     onStart();
+  };
+
+  const handleBack = () => {
+    playButton();
+    router.back();
   };
 
   if (!isOpen) return null;
@@ -36,7 +42,7 @@ export const InstructionsModal = ({ onStart }: any) => {
             </Text>
             <Text style={styles.instructionText}>
               <Text style={{ color: '#c084fc', fontWeight: 'bold' }}>2. Explora: </Text>
-              Toca la imagen para encontrar el objeto oculto.
+              Toca la imagen para encontrar el objeto correcto.
             </Text>
             <Text style={styles.instructionText}>
               <Text style={{ color: '#f472b6', fontWeight: 'bold' }}>3. Rápido y preciso: </Text>
@@ -47,6 +53,7 @@ export const InstructionsModal = ({ onStart }: any) => {
             </Text>
           </View>
 
+          {/* Botón principal: jugar */}
           <TouchableOpacity onPress={handleStart} activeOpacity={0.8} style={styles.buttonWrapper}>
             <LinearGradient
               colors={['#6366f1', '#a855f7']}
@@ -57,6 +64,12 @@ export const InstructionsModal = ({ onStart }: any) => {
               <Play color="white" size={24} fill="white" />
               <Text style={styles.buttonText}>¡Entendido, a jugar!</Text>
             </LinearGradient>
+          </TouchableOpacity>
+
+          {/* Botón volver */}
+          <TouchableOpacity onPress={handleBack} activeOpacity={0.7} style={styles.backButton}>
+            <ArrowLeft color="#94a3b8" size={18} />
+            <Text style={styles.backButtonText}>Volver al inicio</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -120,6 +133,7 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     width: '100%',
+    marginBottom: 16,
   },
   buttonBg: {
     flexDirection: 'row',
@@ -133,5 +147,17 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
-  }
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  backButtonText: {
+    color: '#94a3b8',
+    fontSize: 15,
+    fontWeight: '600',
+  },
 });
