@@ -82,9 +82,9 @@ export const GameStatus = ({ levelName, levelIndex, totalLevels, errors, progres
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
+    backgroundColor: 'transparent',
     borderRadius: 16,
-    padding: 12,
+    padding: 15,
     borderColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
     marginBottom: 20,

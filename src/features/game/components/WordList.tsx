@@ -92,14 +92,9 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect }: an
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderRadius: 16,
-    padding: 20,
-    borderColor: 'rgba(255,255,255,0.1)',
-    borderWidth: 1,
-    width: '100%',
-    flex: 1,
-    minHeight: 250,
+    padding: 2,
+    width: '120%',
+    right: '10%'
   },
   header: {
     flexDirection: 'row',
