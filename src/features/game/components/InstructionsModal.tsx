@@ -68,7 +68,6 @@ export const InstructionsModal = ({ onStart }: any) => {
 
           {/* Botón volver */}
           <TouchableOpacity onPress={handleBack} activeOpacity={0.7} style={styles.backButton}>
-            <ArrowLeft color="#94a3b8" size={18} />
             <Text style={styles.backButtonText}>Volver al inicio</Text>
           </TouchableOpacity>
         </View>
@@ -80,26 +79,19 @@ export const InstructionsModal = ({ onStart }: any) => {
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.94)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   modalContent: {
-    backgroundColor: '#0f172a',
     borderRadius: 24,
     padding: 32,
     width: '100%',
     maxWidth: 400,
     alignItems: 'center',
-    borderColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
     overflow: 'hidden',
-    shadowColor: '#6366f1',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 40,
-    elevation: 20,
   },
   topBorder: {
     position: 'absolute',

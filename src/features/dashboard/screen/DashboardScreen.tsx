@@ -138,8 +138,8 @@ export function DashboardScreen() {
         {isLevelComplete && !isGameComplete && (
           <View style={styles.overlay}>
             <AnimatedStars />
-            <Text style={styles.overlayTitle}>Level Complete! 🎉</Text>
-            <Text style={styles.overlaySubtitle}>Great job! You found all the objects.</Text>
+            <Text style={styles.overlayTitle}>¡Congratulations!</Text>
+            <Text style={styles.overlaySubtitle}>Felicidades! has completado el nivel.</Text>
 
             {showNextLevelBtn && (
               <View style={styles.overlayActions}>
@@ -153,13 +153,11 @@ export function DashboardScreen() {
                     end={{ x: 1, y: 1 }}
                     style={styles.actionButton}
                   >
-                    <Text style={styles.actionButtonText}>Next Level</Text>
-                    <ArrowRight color="white" size={24} />
+                    <Text style={styles.actionButtonText}>Continuar</Text>
                   </LinearGradient>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={handleBack} activeOpacity={0.7} style={styles.backButton}>
-                  <ArrowLeft color="#cbd5e1" size={18} />
                   <Text style={styles.backButtonText}>Volver al menú</Text>
                 </TouchableOpacity>
               </View>
@@ -276,7 +274,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(10,10,20,0.88)',
+    backgroundColor: 'rgba(0, 0, 0, 0.91)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 32,
