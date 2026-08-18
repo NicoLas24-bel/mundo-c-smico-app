@@ -114,11 +114,15 @@ const styles = StyleSheet.create({
   levelBadge: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 12,
     borderColor: 'rgba(99,102,241,0.4)',
     borderWidth: 1,
+    flexShrink: 0,
+    minWidth: 116,
   },
   levelBadgeTextLabel: {
     color: '#a5b4fc',
@@ -142,14 +146,17 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     flex: 1,
     minWidth: 0,
-    left: 29
+    left: 15
   },
   diffBadge: {
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 8,
     borderWidth: 1,
     flexShrink: 0,
+    minWidth: 64,
   },
   diffText: {
     fontSize: 10,
