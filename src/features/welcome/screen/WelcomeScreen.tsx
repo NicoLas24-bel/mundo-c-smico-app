@@ -95,7 +95,7 @@ export function WelcomeScreen() {
 
         {/* Company badge */}
         <View style={styles.badgeContainer}>
-          <Text style={styles.badgeText}>MundoMagico.cl</Text>
+          <Text style={styles.badgeText}>MundoCosmico.cl</Text>
         </View>
 
         {/* Title */}
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   logoEmoji: {
     fontSize: 52,
-    
+
   },
   badgeContainer: {
     alignItems: 'center',
