@@ -1,15 +1,17 @@
 import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { navigate } from '@/router';
 
 import { useColorScheme } from '@/shared/hooks/useColorScheme';
 import { AppText } from '@/shared/components/ui/AppText';
 
-import { WelcomeButton } from './components/WelcomeButton';
-import { welcomeStyles as styles } from './welcome.styles';
+import { WelcomeButton } from '../components/WelcomeButton';
+import { welcomeStyles as styles } from '../welcome.styles';
 
 export function WelcomeScreen() {
   const { colors } = useColorScheme();
+
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -24,13 +26,13 @@ export function WelcomeScreen() {
           <AppText
             style={[styles.badgeText, { color: colors.primary }]}
           >
-            Mi App
+            GO app
           </AppText>
         </View>
 
         {/* Headline */}
         <AppText variant="display" style={styles.title}>
-          Bienvenido 👋
+          Bienvenido
         </AppText>
 
         {/* Subtitle */}
@@ -39,12 +41,16 @@ export function WelcomeScreen() {
           style={styles.subtitle}
           color={colors.textSecondary}
         >
-          Tu punto de partida. Limpio, escalable y listo para crecer.
+          Tu punto de partida hacia una nueva experiencia
         </AppText>
 
         {/* Actions */}
         <View style={styles.actionsContainer}>
-          <WelcomeButton label="Comenzar" variant="primary" />
+          <WelcomeButton
+            label="Comenzar"
+            variant="primary"
+            onPress={navigate.toDashboard}
+          />
           <WelcomeButton label="Saber más" variant="secondary" />
         </View>
       </SafeAreaView>
