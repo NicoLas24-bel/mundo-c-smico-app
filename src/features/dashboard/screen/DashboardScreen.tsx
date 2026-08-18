@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { navigate } from '@/router';
 
@@ -11,11 +11,46 @@ import { GameStatus } from '../../game/components/GameStatus';
 import { GameFeedback } from '../../game/components/GameFeedback';
 import { GameTimer } from '../../game/components/GameTimer';
 import { InstructionsModal } from '../../game/components/InstructionsModal';
-import { RotateCcw, Home as HomeIcon, Trophy, Star, Frown } from 'lucide-react-native';
+import { RotateCcw, ArrowRight, Home as HomeIcon, Trophy, Star, Frown } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+
+function AnimatedStars() {
+  const anims = useRef([0, 1, 2].map(() => new Animated.Value(0))).current;
+
+  useEffect(() => {
+    Animated.stagger(
+      180,
+      anims.map((a) =>
+        Animated.spring(a, {
+          toValue: 1,
+          friction: 4,
+          tension: 60,
+          useNativeDriver: true,
+        })
+      )
+    ).start();
+  }, [anims]);
+
+  return (
+    <View style={styles.starsRow}>
+      {anims.map((a, i) => (
+        <Animated.View
+          key={i}
+          style={{
+            opacity: a,
+            transform: [{ scale: a }],
+          }}
+        >
+          <Star color="#fbbf24" fill="#fbbf24" size={40} />
+        </Animated.View>
+      ))}
+    </View>
+  );
+}
 
 export function DashboardScreen() {
   const { playButton } = useSound();
+  const [showNextLevelBtn, setShowNextLevelBtn] = useState(false);
   const {
     currentLevel,
     currentLevelIndex,
@@ -32,17 +67,19 @@ export function DashboardScreen() {
     startGame,
     handleWordSelect,
     handleObjectSelect,
+    nextLevel,
     restartLevel,
     restartGame
   } = useGameState();
 
   useEffect(() => {
     if (isLevelComplete && !isGameComplete) {
-      // Level finished: go back to the menu so the next level can be selected
       const timer = setTimeout(() => {
-        navigate.back();
-      }, 2500);
+        setShowNextLevelBtn(true);
+      }, 2000);
       return () => clearTimeout(timer);
+    } else {
+      setShowNextLevelBtn(false);
     }
   }, [isLevelComplete, isGameComplete]);
 
@@ -95,14 +132,26 @@ export function DashboardScreen() {
         {/* Level Complete Overlay */}
         {isLevelComplete && !isGameComplete && (
           <View style={styles.overlay}>
-            <View style={styles.starsRow}>
-              {[...Array(3)].map((_, i) => (
-                <Star key={i} color="#fbbf24" fill="#fbbf24" size={40} />
-              ))}
-            </View>
+            <AnimatedStars />
             <Text style={styles.overlayTitle}>Level Complete! 🎉</Text>
             <Text style={styles.overlaySubtitle}>Great job! You found all the objects.</Text>
-            <Text style={styles.overlayText}>Volviendo al menú...</Text>
+
+            {showNextLevelBtn && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => { playButton(); nextLevel(); }}
+              >
+                <LinearGradient
+                  colors={['#6366f1', '#a855f7']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.actionButton}
+                >
+                  <Text style={styles.actionButtonText}>Next Level</Text>
+                  <ArrowRight color="white" size={24} />
+                </LinearGradient>
+              </TouchableOpacity>
+            )}
           </View>
         )}
 
