@@ -114,8 +114,7 @@ const styles = StyleSheet.create({
   levelBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 12,
     borderColor: 'rgba(99,102,241,0.4)',
@@ -130,6 +129,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '900',
+    paddingHorizontal: 5,
   },
   levelBadgeTextTotal: {
     color: '#94a3b8',
