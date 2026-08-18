@@ -1,17 +1,29 @@
-let sessionState: any = null;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const saveProgress = (state: any) => {
+const STORAGE_KEY = 'game_progress';
+
+export const saveProgress = async (state: any) => {
   try {
-    sessionState = JSON.parse(JSON.stringify(state));
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (error) {
-    console.error("Error saving to sessionState:", error);
+    console.error('Error saving progress:', error);
   }
 };
 
-export const loadProgress = () => {
-  return sessionState;
+export const loadProgress = async (): Promise<any> => {
+  try {
+    const raw = await AsyncStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    console.error('Error loading progress:', error);
+    return null;
+  }
 };
 
-export const clearProgress = () => {
-  sessionState = null;
+export const clearProgress = async () => {
+  try {
+    await AsyncStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error('Error clearing progress:', error);
+  }
 };

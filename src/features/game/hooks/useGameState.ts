@@ -6,25 +6,29 @@ import { useSound } from './useSound';
 export const useGameState = () => {
   const { playSelectCorrect, playLevelComplete, playError, playGameOver, playWin } = useSound();
 
-  const [currentLevelIndex, setCurrentLevelIndex] = useState(() => {
-    const saved = loadProgress();
-    return saved?.currentLevelIndex ?? 0;
-  });
+  const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
+  const [unlockedLevelIndex, setUnlockedLevelIndex] = useState(0);
+  const [errors, setErrors] = useState(0);
+  const [foundObjects, setFoundObjects] = useState<string[]>([]);
+  const [hydrated, setHydrated] = useState(false);
 
-  const [unlockedLevelIndex, setUnlockedLevelIndex] = useState(() => {
-    const saved = loadProgress();
-    return saved?.unlockedLevelIndex ?? 0;
-  });
-
-  const [errors, setErrors] = useState(() => {
-    const saved = loadProgress();
-    return saved?.errors ?? 0;
-  });
-
-  const [foundObjects, setFoundObjects] = useState<string[]>(() => {
-    const saved = loadProgress();
-    return saved?.foundObjects ?? [];
-  });
+  // Restore progress from persistent storage when the game mounts
+  useEffect(() => {
+    let active = true;
+    loadProgress().then((saved) => {
+      if (!active) return;
+      if (saved) {
+        setCurrentLevelIndex(saved.currentLevelIndex ?? 0);
+        setUnlockedLevelIndex(saved.unlockedLevelIndex ?? 0);
+        setErrors(saved.errors ?? 0);
+        setFoundObjects(saved.foundObjects ?? []);
+      }
+      setHydrated(true);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [feedback, setFeedback] = useState({ message: '', type: '' });
@@ -49,15 +53,16 @@ export const useGameState = () => {
   const isLevelComplete = currentLevel && foundObjects.length === currentLevel.objects.length;
   const isGameComplete = isLevelComplete && currentLevelIndex === levels.length - 1;
 
-  // Save state on change
+  // Save state on change (after hydration, so it never overwrites saved progress)
   useEffect(() => {
+    if (!hydrated) return;
     saveProgress({
       currentLevelIndex,
       errors,
       foundObjects,
       unlockedLevelIndex,
     });
-  }, [currentLevelIndex, errors, foundObjects, unlockedLevelIndex]);
+  }, [currentLevelIndex, errors, foundObjects, unlockedLevelIndex, hydrated]);
 
   const restartLevel = useCallback(() => {
     setErrors(0);
