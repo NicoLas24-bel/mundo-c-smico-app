@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Lock, Play, CheckCircle2, ChevronLeft, MapPin } from 'lucide-react-native';
+import { useFocusEffect } from 'expo-router';
 import { levels } from '../../game/data/levels';
 import { loadProgress, saveProgress } from '../../game/utils/storage';
 import { navigate } from '@/router';
@@ -16,8 +17,16 @@ const DIFFICULTY: any = {
 
 export function MenuScreen() {
   const { playButton } = useSound();
-  const progress = loadProgress();
-  const unlockedLevelIndex = progress?.unlockedLevelIndex ?? 0;
+  const [unlockedLevelIndex, setUnlockedLevelIndex] = useState(
+    () => loadProgress()?.unlockedLevelIndex ?? 0
+  );
+
+  // Refresh progress every time the menu regains focus (e.g. back from a level)
+  useFocusEffect(
+    useCallback(() => {
+      setUnlockedLevelIndex(loadProgress()?.unlockedLevelIndex ?? 0);
+    }, [])
+  );
 
   const handleSelectLevel = (levelIndex: number) => {
     playButton();

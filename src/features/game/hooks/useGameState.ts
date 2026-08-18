@@ -63,7 +63,9 @@ export const useGameState = () => {
     setErrors(0);
     setFoundObjects([]);
     setSelectedWord(null);
+    setFeedback({ message: '', type: '' });
     setTimeLeft(60);
+    setIsGameOver(false);
   }, []);
 
   // Timer logic
@@ -71,9 +73,8 @@ export const useGameState = () => {
     if (!isPlaying || isLevelComplete || isGameComplete || isGameOver) return;
 
     if (timeLeft <= 0) {
-      // Time's up: Game Over
+      // Time's up: Game Over (unlock progress is kept)
       playGameOver();
-      clearProgress();
       setIsGameOver(true);
       return;
     }
@@ -135,7 +136,6 @@ export const useGameState = () => {
 
       if (newErrors >= 3) {
         playGameOver();
-        clearProgress();
         setIsGameOver(true);
       }
     }
