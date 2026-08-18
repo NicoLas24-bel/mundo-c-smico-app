@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     flex: 1,
     minWidth: 0,
+    left: 29
   },
   diffBadge: {
     paddingHorizontal: 10,
