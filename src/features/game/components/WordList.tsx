@@ -48,7 +48,7 @@ function FlipWord({ word, translation, found, isSelected }: any) {
   );
 }
 
-export const WordList = ({ words, foundObjects, selectedWord, onWordSelect }: any) => {
+export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, levelId }: any) => {
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -83,7 +83,7 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect }: an
 
             return (
               <TouchableOpacity
-                key={obj.id}
+                key={`${levelId}-${obj.id}`}
                 onPress={() => onWordSelect(obj.id)}
                 disabled={isFound}
                 activeOpacity={0.7}

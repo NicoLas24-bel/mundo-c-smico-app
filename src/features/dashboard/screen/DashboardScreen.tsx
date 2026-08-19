@@ -140,6 +140,7 @@ export function DashboardScreen() {
             <View style={styles.wordsContainer}>
               <WordList
                 words={currentLevel.objects}
+                levelId={currentLevel.id}
                 foundObjects={foundObjects}
                 selectedWord={selectedWord}
                 onWordSelect={handleWordSelect}
@@ -192,7 +193,7 @@ export function DashboardScreen() {
               <Trophy color="white" size={48} />
             </LinearGradient>
 
-            <Text style={styles.overlayTitle}>You Won! 🏆</Text>
+            <Text style={styles.overlayTitle}>You Won!</Text>
             <Text style={styles.overlaySubtitle}>Amazing! You completed all {totalLevels} levels!</Text>
             <Text style={styles.overlayText}>You are an English vocabulary champion.</Text>
 
