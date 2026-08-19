@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Animated, BackHandler, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView, BackHandler, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { navigate } from '@/router';
 
@@ -11,42 +11,10 @@ import { GameStatus } from '../../game/components/GameStatus';
 import { GameFeedback } from '../../game/components/GameFeedback';
 import { GameTimer } from '../../game/components/GameTimer';
 import { InstructionsModal } from '../../game/components/InstructionsModal';
-import { RotateCcw, ArrowRight, Home as HomeIcon, Trophy, Star, Frown, ArrowLeft, Play, Pause } from 'lucide-react-native';
+import { StarRating } from '../../game/components/StarRating';
+import { getStars } from '../../game/utils/stars';
+import { RotateCcw, ArrowRight, Home as HomeIcon, Trophy, Frown, ArrowLeft, Play, Pause } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
-function AnimatedStars() {
-  const anims = useRef([0, 1, 2].map(() => new Animated.Value(0))).current;
-
-  useEffect(() => {
-    Animated.stagger(
-      180,
-      anims.map((a) =>
-        Animated.spring(a, {
-          toValue: 1,
-          friction: 4,
-          tension: 60,
-          useNativeDriver: true,
-        })
-      )
-    ).start();
-  }, [anims]);
-
-  return (
-    <View style={styles.starsRow}>
-      {anims.map((a, i) => (
-        <Animated.View
-          key={i}
-          style={{
-            opacity: a,
-            transform: [{ scale: a }],
-          }}
-        >
-          <Star color="#fbbf24" fill="#fbbf24" size={40} />
-        </Animated.View>
-      ))}
-    </View>
-  );
-}
 
 export function DashboardScreen() {
   const { playButton, playLevelComplete, playWin } = useSound();
@@ -176,7 +144,7 @@ export function DashboardScreen() {
         {/* Level Complete Overlay */}
         {showCompleteOverlay && !isGameComplete && (
           <View style={styles.overlay}>
-            <AnimatedStars />
+            <StarRating stars={getStars(errors)} style={styles.overlayStars} />
             <Text style={styles.overlayTitle}>¡Congratulations!</Text>
             <Text style={styles.overlaySubtitle}>Felicidades! has completado el nivel.</Text>
 
@@ -213,6 +181,8 @@ export function DashboardScreen() {
             >
               <Trophy color="white" size={48} />
             </LinearGradient>
+
+            <StarRating stars={getStars(errors)} size={36} gap={10} style={styles.overlayStars} />
 
             <Text style={styles.overlayTitle}>You Won!</Text>
             <Text style={styles.overlaySubtitle}>Amazing! You completed all {totalLevels} levels!</Text>
@@ -430,9 +400,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
   },
-  starsRow: {
-    flexDirection: 'row',
-    gap: 8,
+  overlayStars: {
     marginBottom: 16,
   },
   overlayTitle: {
