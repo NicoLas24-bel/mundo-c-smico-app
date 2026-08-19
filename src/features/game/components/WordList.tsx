@@ -25,7 +25,12 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect }: an
       <View style={styles.divider} />
 
       {/* Words List */}
-      <ScrollView contentContainerStyle={styles.wordsContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.wordsContainer}
+        nestedScrollEnabled
+        showsVerticalScrollIndicator={false}
+        style={styles.scroll}
+      >
         <View style={styles.grid}>
           {words.map((obj: any, i: number) => {
             const isFound = foundObjects.includes(obj.id);
@@ -128,6 +133,9 @@ const styles = StyleSheet.create({
   },
   wordsContainer: {
     paddingBottom: 16,
+  },
+  scroll: {
+    height: 190,
   },
   grid: {
     flexDirection: 'row',

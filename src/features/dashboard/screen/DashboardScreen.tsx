@@ -97,7 +97,7 @@ export function DashboardScreen() {
       <SafeAreaView style={styles.safeArea}>
 
         {/* Scrollable container for smaller screens if needed */}
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} nestedScrollEnabled>
 
           <GameStatus
             levelName={currentLevel.name}
