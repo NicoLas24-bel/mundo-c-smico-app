@@ -49,7 +49,7 @@ function AnimatedStars() {
 }
 
 export function DashboardScreen() {
-  const { playButton } = useSound();
+  const { playButton, playLevelComplete, playWin } = useSound();
   const [showNextLevelBtn, setShowNextLevelBtn] = useState(false);
   const [showCompleteOverlay, setShowCompleteOverlay] = useState(false);
   const {
@@ -82,12 +82,17 @@ export function DashboardScreen() {
     if (isLevelComplete && !isGameOver) {
       const timer = setTimeout(() => {
         setShowCompleteOverlay(true);
+        if (isGameComplete) {
+          playWin();
+        } else {
+          playLevelComplete();
+        }
       }, 2000);
       return () => clearTimeout(timer);
     } else {
       setShowCompleteOverlay(false);
     }
-  }, [isLevelComplete, isGameOver]);
+  }, [isLevelComplete, isGameOver, isGameComplete]);
 
   useEffect(() => {
     if (showCompleteOverlay && !isGameComplete) {

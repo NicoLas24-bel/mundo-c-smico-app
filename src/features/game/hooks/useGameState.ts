@@ -4,7 +4,7 @@ import { saveProgress, loadProgress, clearProgress } from '../utils/storage';
 import { useSound } from './useSound';
 
 export const useGameState = () => {
-  const { playSelectCorrect, playLevelComplete, playError, playGameOver, playWin } = useSound();
+  const { playSelectCorrect, playError, playGameOver } = useSound();
 
   const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
   const [unlockedLevelIndex, setUnlockedLevelIndex] = useState(0);
@@ -117,13 +117,9 @@ export const useGameState = () => {
       setFoundObjects(nextFound);
 
       if (nextFound.length === currentLevel.objects.length) {
-        // Last object of the LAST level → game complete (You Win)
-        if (currentLevelIndex === levels.length - 1) {
-          playWin();
-        } else {
-          // Unlock the next level sequentially
+        // Unlock the next level sequentially (win sound plays with the overlay)
+        if (currentLevelIndex < levels.length - 1) {
           setUnlockedLevelIndex((prev: number) => Math.max(prev, currentLevelIndex + 1));
-          playLevelComplete();
         }
         setFeedback({ message: '', type: '' });
         setSelectedWord(null);
