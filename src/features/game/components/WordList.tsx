@@ -25,6 +25,10 @@ function FlipWord({ word, translation, found, isSelected }: any) {
           }).start();
         }
       });
+    } else if (!found && animatedRef.current) {
+      animatedRef.current = false;
+      rotate.setValue(0);
+      setShowBack(false);
     }
   }, [found, rotate]);
 

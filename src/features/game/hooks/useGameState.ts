@@ -20,8 +20,6 @@ export const useGameState = (paused = false) => {
       if (saved) {
         setCurrentLevelIndex(saved.currentLevelIndex ?? 0);
         setUnlockedLevelIndex(saved.unlockedLevelIndex ?? 0);
-        setErrors(saved.errors ?? 0);
-        setFoundObjects(saved.foundObjects ?? []);
       }
       setHydrated(true);
     });
@@ -58,11 +56,9 @@ export const useGameState = (paused = false) => {
     if (!hydrated) return;
     saveProgress({
       currentLevelIndex,
-      errors,
-      foundObjects,
       unlockedLevelIndex,
     });
-  }, [currentLevelIndex, errors, foundObjects, unlockedLevelIndex, hydrated]);
+  }, [currentLevelIndex, unlockedLevelIndex, hydrated]);
 
   const restartLevel = useCallback(() => {
     setErrors(0);
