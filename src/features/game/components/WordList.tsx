@@ -1,7 +1,52 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated } from 'react-native';
 import { Check, Sparkles } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+
+function FlipWord({ word, translation, found, isSelected }: any) {
+  const [rotate] = useState(() => new Animated.Value(0));
+  const [showBack, setShowBack] = useState(found);
+  const animatedRef = useRef(found);
+
+  useEffect(() => {
+    if (found && !animatedRef.current) {
+      animatedRef.current = true;
+      Animated.timing(rotate, {
+        toValue: 90,
+        duration: 200,
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (finished) {
+          setShowBack(true);
+          Animated.timing(rotate, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true,
+          }).start();
+        }
+      });
+    }
+  }, [found, rotate]);
+
+  const scaleX = rotate.interpolate({ inputRange: [0, 90], outputRange: [1, 0] });
+
+  return (
+    <Animated.View style={[styles.flipContainer, { transform: [{ scaleX }] }]}>
+      {showBack ? (
+        <Text style={styles.flipBackText} numberOfLines={1}>
+          {translation}
+        </Text>
+      ) : (
+        <Text
+          style={[styles.wordText, isSelected && styles.wordTextSelected]}
+          numberOfLines={1}
+        >
+          {word}
+        </Text>
+      )}
+    </Animated.View>
+  );
+}
 
 export const WordList = ({ words, foundObjects, selectedWord, onWordSelect }: any) => {
   return (
@@ -69,12 +114,12 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect }: an
                   </Text>
                 </View>
 
-                <Text style={[
-                  styles.wordText,
-                  isFound ? styles.wordTextFound : isSelected ? styles.wordTextSelected : null
-                ]} numberOfLines={1}>
-                  {obj.word}
-                </Text>
+                <FlipWord
+                  word={obj.word}
+                  translation={obj.translation}
+                  found={isFound}
+                  isSelected={isSelected}
+                />
 
                 {isFound && (
                   <View style={styles.checkContainer}>
@@ -158,7 +203,6 @@ const styles = StyleSheet.create({
   wordButtonFound: {
     backgroundColor: 'rgba(34,197,94,0.15)',
     borderColor: 'rgba(34,197,94,0.35)',
-    opacity: 0.7,
   },
   wordButtonSelected: {
     borderColor: 'rgba(99,102,241,0.8)',
@@ -191,16 +235,25 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   wordText: {
-    flex: 1,
     fontSize: 13,
     fontWeight: '900',
     color: '#e2e8f0',
-  },
-  wordTextFound: {
-    color: '#4ade80',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
   },
   wordTextSelected: {
     color: 'white',
+  },
+  flipContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  flipBackText: {
+    fontSize: 13,
+    fontWeight: '900',
+    color: '#4ade80',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
   },
   checkContainer: {
     width: 24,
