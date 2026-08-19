@@ -3,7 +3,7 @@ import { levels } from '../data/levels';
 import { saveProgress, loadProgress, clearProgress } from '../utils/storage';
 import { useSound } from './useSound';
 
-export const useGameState = () => {
+export const useGameState = (paused = false) => {
   const { playSelectCorrect, playError, playGameOver } = useSound();
 
   const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
@@ -75,7 +75,7 @@ export const useGameState = () => {
 
   // Timer logic
   useEffect(() => {
-    if (!isPlaying || isLevelComplete || isGameComplete || isGameOver) return;
+    if (!isPlaying || paused || isLevelComplete || isGameComplete || isGameOver) return;
 
     if (timeLeft <= 0) {
       // Time's up: Game Over (unlock progress is kept)
@@ -85,11 +85,11 @@ export const useGameState = () => {
     }
 
     const timer = setInterval(() => {
-      // setTimeLeft((prev) => prev - 1);
+      setTimeLeft((prev) => prev - 1);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, isPlaying, isLevelComplete, isGameComplete, isGameOver, errors, restartLevel, playGameOver]);
+  }, [timeLeft, isPlaying, paused, isLevelComplete, isGameComplete, isGameOver, errors, restartLevel, playGameOver]);
 
   const startGame = () => {
     setIsPlaying(true);

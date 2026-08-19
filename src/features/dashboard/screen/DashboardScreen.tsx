@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Animated } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Animated, BackHandler, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { navigate } from '@/router';
 
@@ -11,7 +11,7 @@ import { GameStatus } from '../../game/components/GameStatus';
 import { GameFeedback } from '../../game/components/GameFeedback';
 import { GameTimer } from '../../game/components/GameTimer';
 import { InstructionsModal } from '../../game/components/InstructionsModal';
-import { RotateCcw, ArrowRight, Home as HomeIcon, Trophy, Star, Frown, ArrowLeft } from 'lucide-react-native';
+import { RotateCcw, ArrowRight, Home as HomeIcon, Trophy, Star, Frown, ArrowLeft, Play, Pause } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 function AnimatedStars() {
@@ -52,6 +52,7 @@ export function DashboardScreen() {
   const { playButton, playLevelComplete, playWin } = useSound();
   const [showNextLevelBtn, setShowNextLevelBtn] = useState(false);
   const [showCompleteOverlay, setShowCompleteOverlay] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const {
     currentLevel,
     currentLevelIndex,
@@ -71,12 +72,32 @@ export function DashboardScreen() {
     nextLevel,
     restartLevel,
     restartGame
-  } = useGameState();
+  } = useGameState(isPaused);
 
   const handleBack = () => {
     playButton();
     navigate.toMenu();
   };
+
+  const handlePauseExit = () => {
+    playButton();
+    setIsPaused(false);
+    navigate.toMenu();
+  };
+
+  // Botón físico "atrás": mientras se juega abre el menú de pausa
+  useEffect(() => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (!isPlaying || isGameOver || showCompleteOverlay) return false;
+      if (isPaused) {
+        setIsPaused(false);
+        return true;
+      }
+      setIsPaused(true);
+      return true;
+    });
+    return () => sub.remove();
+  }, [isPlaying, isGameOver, showCompleteOverlay, isPaused]);
 
   useEffect(() => {
     if (isLevelComplete && !isGameOver) {
@@ -257,6 +278,49 @@ export function DashboardScreen() {
           <InstructionsModal onStart={startGame} />
         )}
 
+        {/* Pause Menu */}
+        <Modal
+          visible={isPaused}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setIsPaused(false)}
+        >
+          <View style={styles.pauseOverlay}>
+            <View style={styles.pauseCard}>
+              <View style={styles.pauseIcon}>
+                <Pause color="white" size={26} />
+              </View>
+              <Text style={styles.pauseTitle}>Juego en pausa</Text>
+              <Text style={styles.pauseSubtitle}>¿Qué deseas hacer?</Text>
+
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => { playButton(); setIsPaused(false); }}
+                style={styles.pausePrimary}
+              >
+                <LinearGradient
+                  colors={['#6366f1', '#a855f7']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.pausePrimaryBg}
+                >
+                  <Play color="white" size={20} fill="white" />
+                  <Text style={styles.pausePrimaryText}>Continuar</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={handlePauseExit}
+                style={styles.pauseSecondary}
+              >
+                <HomeIcon color="#94a3b8" size={18} />
+                <Text style={styles.pauseSecondaryText}>Salir al menú</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
       </SafeAreaView>
     </View>
   );
@@ -297,6 +361,74 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 32,
     zIndex: 20,
+  },
+  pauseOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  pauseCard: {
+    width: '100%',
+    maxWidth: 320,
+    borderRadius: 24,
+    padding: 28,
+    backgroundColor: '#1e293b',
+    borderColor: 'rgba(255,255,255,0.1)',
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  pauseIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: 'rgba(99,102,241,0.18)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  pauseTitle: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: '900',
+  },
+  pauseSubtitle: {
+    color: '#94a3b8',
+    fontSize: 15,
+    fontWeight: '600',
+    marginTop: 4,
+    marginBottom: 24,
+  },
+  pausePrimary: {
+    width: '100%',
+  },
+  pausePrimaryBg: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 14,
+    borderRadius: 14,
+    gap: 10,
+  },
+  pausePrimaryText: {
+    color: 'white',
+    fontSize: 17,
+    fontWeight: '900',
+  },
+  pauseSecondary: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginTop: 8,
+  },
+  pauseSecondaryText: {
+    color: '#94a3b8',
+    fontSize: 15,
+    fontWeight: '600',
   },
   starsRow: {
     flexDirection: 'row',
