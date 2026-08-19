@@ -166,6 +166,13 @@ export const useGameState = (paused = false) => {
     setIsGameOver(false);
   };
 
+  const stopGame = () => {
+    setIsPlaying(false);
+    setTimeLeft(60);
+    setSelectedWord(null);
+    setFeedback({ message: '', type: '' });
+  };
+
   return {
     currentLevel,
     currentLevelIndex,
@@ -181,6 +188,7 @@ export const useGameState = (paused = false) => {
     timeLeft,
     isPlaying,
     startGame,
+    stopGame,
     handleWordSelect,
     handleObjectSelect,
     nextLevel,

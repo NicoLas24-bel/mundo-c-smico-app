@@ -71,7 +71,8 @@ export function DashboardScreen() {
     handleObjectSelect,
     nextLevel,
     restartLevel,
-    restartGame
+    restartGame,
+    stopGame
   } = useGameState(isPaused);
 
   const handleBack = () => {
@@ -82,6 +83,7 @@ export function DashboardScreen() {
   const handlePauseExit = () => {
     playButton();
     setIsPaused(false);
+    stopGame();
     navigate.toMenu();
   };
 
