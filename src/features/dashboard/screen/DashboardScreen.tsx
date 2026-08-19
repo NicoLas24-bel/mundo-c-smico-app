@@ -51,6 +51,7 @@ function AnimatedStars() {
 export function DashboardScreen() {
   const { playButton } = useSound();
   const [showNextLevelBtn, setShowNextLevelBtn] = useState(false);
+  const [showCompleteOverlay, setShowCompleteOverlay] = useState(false);
   const {
     currentLevel,
     currentLevelIndex,
@@ -78,15 +79,26 @@ export function DashboardScreen() {
   };
 
   useEffect(() => {
-    if (isLevelComplete && !isGameComplete) {
+    if (isLevelComplete && !isGameOver) {
+      const timer = setTimeout(() => {
+        setShowCompleteOverlay(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowCompleteOverlay(false);
+    }
+  }, [isLevelComplete, isGameOver]);
+
+  useEffect(() => {
+    if (showCompleteOverlay && !isGameComplete) {
       const timer = setTimeout(() => {
         setShowNextLevelBtn(true);
-      }, 2000);
+      }, 1000);
       return () => clearTimeout(timer);
     } else {
       setShowNextLevelBtn(false);
     }
-  }, [isLevelComplete, isGameComplete]);
+  }, [showCompleteOverlay, isGameComplete]);
 
   if (!currentLevel) return null;
 
@@ -135,7 +147,7 @@ export function DashboardScreen() {
         <GameFeedback feedback={feedback} />
 
         {/* Level Complete Overlay */}
-        {isLevelComplete && !isGameComplete && (
+        {showCompleteOverlay && !isGameComplete && (
           <View style={styles.overlay}>
             <AnimatedStars />
             <Text style={styles.overlayTitle}>¡Congratulations!</Text>
@@ -166,7 +178,7 @@ export function DashboardScreen() {
         )}
 
         {/* Game Complete Overlay */}
-        {isGameComplete && (
+        {showCompleteOverlay && isGameComplete && (
           <View style={styles.overlay}>
             <LinearGradient
               colors={['#f59e0b', '#fbbf24']}
