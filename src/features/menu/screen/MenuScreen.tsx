@@ -62,7 +62,7 @@ export function MenuScreen() {
                     <View style={styles.headerCenter}>
                         <Text style={styles.title}> Elige un nivel</Text>
                         <Text style={styles.subtitle}>
-                            {unlockedLevelIndex + 1} de {levels.length} niveles superados ¡Genial!
+                            {unlockedLevelIndex} de {levels.length} niveles superados
                         </Text>
                     </View>
                     <View style={styles.headerSpacer} />

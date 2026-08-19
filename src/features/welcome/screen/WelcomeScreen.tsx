@@ -100,7 +100,7 @@ export function WelcomeScreen() {
 
         {/* Title */}
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Aprende Inglés Jugando</Text>
+          <Text style={styles.title}>Aprendo Inglés Jugando</Text>
           <Text style={styles.subtitle}>Juego educativo para todos</Text>
         </View>
 
