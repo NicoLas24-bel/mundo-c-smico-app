@@ -71,20 +71,18 @@ export function DashboardScreen() {
     handleObjectSelect,
     nextLevel,
     restartLevel,
-    restartGame,
-    stopGame
+    restartGame
   } = useGameState(isPaused);
 
   const handleBack = () => {
     playButton();
-    navigate.toMenu();
+    navigate.back();
   };
 
   const handlePauseExit = () => {
     playButton();
     setIsPaused(false);
-    stopGame();
-    navigate.toMenu();
+    navigate.back();
   };
 
   // Botón físico "atrás": mientras se juega abre el menú de pausa
