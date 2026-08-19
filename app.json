@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "MiApp",
-    "slug": "MiApp",
+    "name": "MundoCosmico",
+    "slug": "MundoCosmico",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "miapp",
+    "scheme": "mundocosmico",
     "userInterfaceStyle": "automatic",
     "android": {
       "adaptiveIcon": {
