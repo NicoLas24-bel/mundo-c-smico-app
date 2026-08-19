@@ -24,11 +24,11 @@ export const levels: Level[] = [
     image: require('../../../../assets/images/levels/bedroom/bedroom.png'),
     objects: [
       { id: "bed", word: "BED", translation: "CAMA", top: 63, left: 50, width: 45, height: 22 },
-      { id: "chair", word: "CHAIR", translation: "SILLA", top: 65, left: 85, width: 14, height: 22 },
+      { id: "armchair", word: "ARMCHAIR", translation: "SILLON", top: 65, left: 85, width: 14, height: 22 },
       { id: "window", word: "WINDOW", translation: "VENTANA", top: 28, left: 24, width: 23, height: 24 },
       { id: "lamp", word: "LAMP", translation: "LÁMPARA", top: 40, left: 46, width: 8, height: 16 },
       { id: "bear", word: "BEAR", translation: "OSO", top: 84, left: 69, width: 10, height: 10 },
-      { id: "ball", word: "BALL", translation: "PELOTA", top: 85, left: 80, width: 9, height: 10 }
+      { id: "ball", word: "BALL", translation: "PELOTA", top: 85, left: 80, width: 9, height: 10 },
     ]
   },
   {
@@ -51,10 +51,10 @@ export const levels: Level[] = [
     difficulty: "medium",
     image: require('../../../../assets/images/levels/classroom/classroom.png'),
     objects: [
-      { id: "desk", word: "DESK", translation: "ESCRITORIO", top: 70, left: 52, width: 38, height: 20 },
+      { id: "desk", word: "DESK", translation: "PUPITRE", top: 70, left: 52, width: 38, height: 20 },
       { id: "clock", word: "CLOCK", translation: "RELOJ", top: 16, left: 48, width: 12, height: 13 },
       { id: "book", word: "BOOK", translation: "LIBRO", top: 55, left: 57, width: 15, height: 11 },
-      { id: "board", word: "BOARD", translation: "PIZARRÓN", top: 30, left: 80, width: 40, height: 22 },
+      { id: "board", word: "BOARD", translation: "PIZARRA", top: 30, left: 80, width: 40, height: 22 },
       { id: "map", word: "MAP", translation: "MAPA", top: 30, left: 49, width: 19, height: 10 },
       { id: "earth", word: "EARTH", translation: "TIERRA", top: 94, left: 38, width: 15, height: 9 },
     ]
@@ -96,9 +96,9 @@ export const levels: Level[] = [
       { id: "mirror", word: "MIRROR", translation: "ESPEJO", top: 27, left: 54, width: 30, height: 30 },
       { id: "towel", word: "TOWEL", translation: "TOALLA", top: 65, left: 85, width: 15, height: 25 },
       { id: "soap", word: "SOAP", translation: "JABÓN", top: 55, left: 40, width: 15, height: 8 },
-      { id: "toothbrush", word: "TOOTHBRUSH", translation: "CEPILLO", top: 50, left: 69, width: 10, height: 12 },
+      { id: "toothbrush", word: "TOOTHBRUSH", translation: "CEPILLO DE DIENTES", top: 50, left: 69, width: 10, height: 12 },
       { id: "shower", word: "SHOWER", translation: "DUCHA", top: 25, left: 90, width: 22, height: 38 },
-      { id: "masseter", word: "MASSETER", translation: "MASETERO", top: 49, left: 9, width: 10, height: 12 }
+      { id: "masseter", word: "PLANTER", translation: "MACETERO", top: 49, left: 9, width: 10, height: 12 }
     ]
   },
   {
@@ -126,9 +126,9 @@ export const levels: Level[] = [
       { id: "bread", word: "BREAD", translation: "PAN", top: 62, left: 18, width: 20, height: 6 },
       { id: "milk", word: "MILK", translation: "LECHE", top: 32, left: 74, width: 3, height: 5 },
       { id: "fish", word: "FISH", translation: "PESCADO", top: 16, left: 10, width: 10, height: 9 },
-      { id: "Fridge", word: "FRIDGE", translation: "REFRIGERADOR", top: 30, left: 90, width: 15, height: 10 },
-      { id: "lettuce", word: "LETTUCE", translation: "lechuga", top: 48, left: 44, width: 10, height: 6 },
-      { id: "bag", word: "BAG", translation: "bolsa", top: 59, left: 83, width: 5, height: 5 }
+      { id: "fridge", word: "FRIDGE", translation: "REFRIGERADOR", top: 30, left: 90, width: 15, height: 10 },
+      { id: "lettuce", word: "LETTUCE", translation: "LECHUGA", top: 48, left: 44, width: 10, height: 6 },
+      { id: "bag", word: "BAG", translation: "BOLSA", top: 59, left: 83, width: 5, height: 5 }
     ]
   },
   {
@@ -142,9 +142,9 @@ export const levels: Level[] = [
       { id: "shell", word: "SHELL", translation: "CONCHA", top: 85, left: 16, width: 10, height: 10 },
       { id: "sand", word: "SAND", translation: "ARENA", top: 92, left: 50, width: 50, height: 12 },
       { id: "shovel", word: "SHOVEL", translation: "PALA", top: 70, left: 86, width: 10, height: 10 },
-      { id: "sailboat", word: "SAIL BOAT", translation: "VELERO", top: 35, left: 73, width: 10, height: 14 },
-      { id: "palm", word: "PALM", translation: "palmera", top: 20, left: 6, width: 10, height: 14 },
-      { id: "trace", word: "TRACE", translation: "huella", top: 88, left: 85, width: 10, height: 10 }
+      { id: "sailboat", word: "SAILBOAT", translation: "VELERO", top: 35, left: 73, width: 10, height: 14 },
+      { id: "palm", word: "PALM", translation: "PALMERA", top: 20, left: 6, width: 10, height: 14 },
+      { id: "trace", word: "FOOTPRINT", translation: "HUELLA", top: 88, left: 85, width: 10, height: 10 }
     ]
   },
   {
@@ -157,7 +157,7 @@ export const levels: Level[] = [
       { id: "hospital_bed", word: "BED", translation: "CAMA", top: 72, left: 65, width: 36, height: 26 },
       { id: "stethoscope", word: "STETHOSCOPE", translation: "ESTETOSCOPIO", top: 45, left: 43, width: 10, height: 10 },
       { id: "ambulance", word: "AMBULANCE", translation: "AMBULANCIA", top: 40, left: 20, width: 22, height: 16 },
-      { id: "lamp", word: "LAMP", translation: "LAMPARA", top: 2, left: 50, width: 22, height: 16 },
+      { id: "light_bulb", word: "LIGHT BULB", translation: "BOMBILLA", top: 5, left: 50, width: 22, height: 16 },
       { id: "syrup", word: "SYRUP", translation: "JARABE", top: 60, left: 15, width: 5, height: 5 },
       { id: "serum", word: "SERUM", translation: "SUERO", top: 30, left: 65, width: 5, height: 10 },
       { id: "building", word: "BUILDING", translation: "EDIFICIO", top: 26, left: 25, width: 10, height: 10 },
@@ -174,8 +174,8 @@ export const levels: Level[] = [
       { id: "waiter", word: "WAITER", translation: "MESERO", top: 40, left: 55, width: 25, height: 35 },
       { id: "fork", word: "FORK", translation: "TENEDOR", top: 79, left: 25, width: 10, height: 18 },
       { id: "knife", word: "KNIFE", translation: "CUCHILLO", top: 79, left: 75, width: 10, height: 18 },
-      { id: "chieff", word: "CHIEFF", translation: "CHEF", top: 20, left: 30, width: 12, height: 12 },
-      { id: "napkin", word: "NAPKIN", translation: "SERVILLETTA", top: 84, left: 86, width: 10, height: 10 }
+      { id: "chieff", word: "CHEF", translation: "CHEF", top: 20, left: 30, width: 12, height: 12 },
+      { id: "napkin", word: "NAPKIN", translation: "SERVILLETA", top: 84, left: 86, width: 10, height: 10 }
     ]
   },
   {
@@ -185,10 +185,10 @@ export const levels: Level[] = [
     image: require('../../../../assets/images/levels/museum/museum.png'),
     objects: [
       { id: "dinosaur", word: "DINOSAUR", translation: "DINOSAURIO", top: 50, left: 65, width: 40, height: 25 },
-      { id: "painting", word: "PAINTING", translation: "PINTURA", top: 55, left: 19, width: 20, height: 20 },
+      { id: "painting", word: "PAINTING", translation: "CUADRO", top: 55, left: 19, width: 20, height: 20 },
       { id: "statue", word: "STATUE", translation: "ESTATUA", top: 25, left: 5, width: 15, height: 25 },
       { id: "guard", word: "GUARD", translation: "GUARDIA", top: 40, left: 90, width: 8, height: 20 },
-      { id: "vase", word: "VASE", translation: "VASO", top: 85, left: 95, width: 8, height: 8 },
+      { id: "vase", word: "VASE", translation: "FLORERO", top: 85, left: 95, width: 8, height: 8 },
       { id: "dress", word: "DRESS", translation: "VESTIDO", top: 80, left: 20, width: 8, height: 8 },
       { id: "skull", word: "SKULL", translation: "CRÁNEO", top: 25, left: 53, width: 10, height: 10 },
       { id: "egg", word: "EGG", translation: "HUEVO", top: 67, left: 58, width: 5, height: 10 },
@@ -205,7 +205,7 @@ export const levels: Level[] = [
       { id: "desk", word: "DESK", translation: "ESCRITORIO", top: 75, left: 25, width: 20, height: 15 },
       { id: "computer", word: "COMPUTER", translation: "COMPUTADORA", top: 40, left: 87, width: 12, height: 12 },
       { id: "brochure", word: "BROCHURE", translation: "FOLLETO", top: 7, left: 40, width: 10, height: 10 },
-      { id: "globe", word: "GLOBE", translation: "GLOBO", top: 90, left: 57, width: 10, height: 10 },
+      { id: "globe", word: "GLOBE", translation: "GLOBO TERRÁQUEO", top: 90, left: 57, width: 10, height: 10 },
       { id: "keyboard", word: "KEYBOARD", translation: "TECLADO", top: 49, left: 87, width: 10, height: 5 },
       { id: "wheel", word: "WHEEL", translation: "RUEDA", top: 95, left: 75, width: 5, height: 5}
     ]
@@ -237,8 +237,8 @@ export const levels: Level[] = [
       { id: "pilot", word: "PILOT", translation: "PILOTO", top: 65, left: 35, width: 10, height: 25 },
       { id: "passport", word: "PASSPORT", translation: "PASAPORTE", top: 78, left: 88, width: 5, height: 5 },
       { id: "screen", word: "SCREEN", translation: "PANTALLA", top: 28, left: 95, width: 15, height: 15 },
-      { id: "briefcase", word: "BRIEFCASE", translation: "MALETIN", top: 88, left: 25, width: 10, height: 10},
-      { id: "cushion", word: "CUSHION", translation: "COJIN", top: 60, left: 65, width: 8, height: 8},
+      { id: "briefcase", word: "BRIEFCASE", translation: "MALETÍN", top: 88, left: 25, width: 10, height: 10},
+      { id: "cushion", word: "CUSHION", translation: "COJÍN", top: 60, left: 65, width: 8, height: 8},
       { id: "dispenser", word: "DISPENSER", translation: "DISPENSADOR", top: 48, left: 45, width: 5, height: 10},
       { id: "bush", word: "BUSH", translation: "ARBUSTO", top: 25, left: 30, width: 15, height: 10},
       { id: "floor", word: "FLOOR", translation: "SUELO", top: 90, left: 50, width: 35, height: 20}
