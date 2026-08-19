@@ -1,3 +1,3 @@
-import { WelcomeScreen } from '@/features/welcome';
+import { SplashScreen } from '@/features/splash';
 
-export default WelcomeScreen;
+export default SplashScreen;

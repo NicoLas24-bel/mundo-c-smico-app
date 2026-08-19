@@ -1,5 +1,6 @@
 export const Routes = {
-  welcome: '/' as const,
+  splash: '/' as const,
+  welcome: '/welcome' as const,
   dashboard: '/dashboard' as const,
   menu: '/menu' as const,
   settings: '/settings' as const,
