@@ -4,13 +4,13 @@
     "slug": "MundoCosmico",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon/icon.png",
     "scheme": "mundocosmico",
     "userInterfaceStyle": "automatic",
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#1E1B4B",
-        "foregroundImage": "./assets/images/android-icon-foreground.png"
+        "foregroundImage": "./assets/images/icon/icon-remove.png"
       },
       "predictiveBackGestureEnabled": false,
       "permissions": [
@@ -23,7 +23,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/icon/icon.png"
     },
     "plugins": [
       "expo-router",
@@ -31,8 +31,8 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#0F172A",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 100
+          "image": "./assets/images/icon/icon-remove.png",
+          "imageWidth": 200
         }
       ],
       "expo-audio"
