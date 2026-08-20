@@ -61,6 +61,8 @@ export function SettingsScreen() {
 
         {/* Settings list */}
         <View style={styles.list}>
+
+          {/* Sonido */}
           <TouchableOpacity activeOpacity={0.9} style={styles.row} onPress={() => handleToggleSound(!soundEnabled)}>
             <View style={[styles.iconCircle, soundEnabled ? styles.iconCircleOn : styles.iconCircleOff]}>
               {soundEnabled ? (
@@ -81,6 +83,7 @@ export function SettingsScreen() {
             />
           </TouchableOpacity>
 
+          {/* Temporizador */}
           <TouchableOpacity activeOpacity={0.9} style={styles.row} onPress={() => handleToggleTimer(!timerEnabled)}>
             <View style={[styles.iconCircle, timerEnabled ? styles.iconCircleOn : styles.iconCircleOff]}>
               <Timer color={timerEnabled ? '#a855f7' : '#64748b'} size={22} />
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
     gap: 14,
     padding: 16,
     borderRadius: 16,
-    backgroundColor: 'rgba(255,255,255,0.06)',
+    backgroundColor: '#0f172a',
     borderColor: 'rgba(255,255,255,0.08)',
     borderWidth: 1,
   },
