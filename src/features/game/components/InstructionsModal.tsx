@@ -26,12 +26,7 @@ export const InstructionsModal = ({ onStart }: any) => {
     <Modal visible={isOpen} transparent animationType="fade">
       <View style={styles.overlay}>
         <View style={styles.modalContent}>
-          <LinearGradient
-            colors={['#6366f1', '#a855f7', '#ec4899']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.topBorder}
-          />
+        
 
           <Text style={styles.title}>¿Cómo jugar?</Text>
 
@@ -49,7 +44,7 @@ export const InstructionsModal = ({ onStart }: any) => {
               Tienes <Text style={{ fontWeight: 'bold', color: 'white' }}>60 segundos</Text> y <Text style={{ fontWeight: 'bold', color: 'white' }}>3 vidas</Text> por nivel. Si fallas 3 veces o el tiempo se acaba, ¡pierdes el juego!
             </Text>
             <Text style={styles.warningText}>
-              ¡Tienes 3 vidas! ¿Podrás pasar todos los niveles?
+              ¿Podrás pasar todos los niveles?
             </Text>
           </View>
 
