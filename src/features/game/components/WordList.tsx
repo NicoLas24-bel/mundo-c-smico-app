@@ -53,8 +53,18 @@ function FlipWord({ word, translation, found, isSelected }: any) {
   );
 }
 
-export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, levelId }: any) => {
+export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, levelId, onDetailOpen, onDetailClose }: any) => {
   const [expandedWord, setExpandedWord] = useState<any>(null);
+
+  const handleOpenDetail = (obj: any) => {
+    setExpandedWord(obj);
+    if (onDetailOpen) onDetailOpen();
+  };
+
+  const handleCloseDetail = () => {
+    setExpandedWord(null);
+    if (onDetailClose) onDetailClose();
+  };
 
   return (
     <View style={styles.container}>
@@ -91,7 +101,7 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, leve
             return (
               <TouchableOpacity
                 key={`${levelId}-${obj.id}`}
-                onPress={() => isFound ? setExpandedWord(obj) : onWordSelect(obj.id)}
+                onPress={() => isFound ? handleOpenDetail(obj) : onWordSelect(obj.id)}
                 activeOpacity={0.7}
                 style={[
                   styles.wordButton,
@@ -149,7 +159,7 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, leve
           isVisible={!!expandedWord}
           word={expandedWord.word}
           translation={expandedWord.translation}
-          onClose={() => setExpandedWord(null)}
+          onClose={handleCloseDetail}
         />
       )}
     </View>

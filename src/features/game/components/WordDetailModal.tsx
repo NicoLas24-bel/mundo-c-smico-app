@@ -32,7 +32,7 @@ export const WordDetailModal = ({ isVisible, word, translation, onClose }: WordD
                 <X color="#94a3b8" size={24} />
               </TouchableOpacity>
             </View>
-            
+
             <View style={styles.content}>
               <Text style={styles.originalWord}>{word}</Text>
               <View style={styles.divider} />
@@ -59,7 +59,7 @@ export const WordDetailModal = ({ isVisible, word, translation, onClose }: WordD
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerTitle: {
-    color: '#94a3b8',
+    color: '#bec9d8ff',
     fontSize: 14,
     fontWeight: '700',
     letterSpacing: 1,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   translationWord: {
     fontSize: 32,
     fontWeight: '900',
-    color: '#e2e8f0',
+    color: '#e2e8f0ff',
     textAlign: 'center',
     lineHeight: 40,
   },

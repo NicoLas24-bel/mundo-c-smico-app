@@ -21,6 +21,7 @@ export function DashboardScreen() {
   const [showNextLevelBtn, setShowNextLevelBtn] = useState(false);
   const [showCompleteOverlay, setShowCompleteOverlay] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const {
     currentLevel,
     currentLevelIndex,
@@ -41,7 +42,7 @@ export function DashboardScreen() {
     nextLevel,
     restartLevel,
     restartGame
-  } = useGameState(isPaused);
+  } = useGameState(isPaused || isDetailModalOpen);
 
   const handleBack = () => {
     playButton();
@@ -134,6 +135,8 @@ export function DashboardScreen() {
                 foundObjects={foundObjects}
                 selectedWord={selectedWord}
                 onWordSelect={handleWordSelect}
+                onDetailOpen={() => setIsDetailModalOpen(true)}
+                onDetailClose={() => setIsDetailModalOpen(false)}
               />
             </View>
           </View>
@@ -327,7 +330,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(0, 0, 0, 0.93)',
+    backgroundColor: 'rgba(0, 0, 0, 0.95)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 32,
@@ -335,7 +338,7 @@ const styles = StyleSheet.create({
   },
   pauseOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backgroundColor: 'rgba(0, 0, 0, 0.90)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 32,
@@ -345,7 +348,7 @@ const styles = StyleSheet.create({
     maxWidth: 320,
     borderRadius: 24,
     padding: 28,
-    backgroundColor: '#1e293b',
+    backgroundColor: '#1e1b4b',
     borderColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
     alignItems: 'center',
