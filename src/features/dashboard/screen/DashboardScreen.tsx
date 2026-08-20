@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
   pauseCard: {
     width: '100%',
     maxWidth: 320,
-    borderRadius: 24,
+    borderRadius: 20,
     padding: 28,
     backgroundColor: '#1e1b4b',
     borderColor: 'rgba(255,255,255,0.1)',
