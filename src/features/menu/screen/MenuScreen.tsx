@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
         gap: 14,
         padding: 12,
         borderRadius: 16,
-        borderColor: 'rgba(169, 19, 228, 0.47)',
+        borderColor: 'rgba(169, 19, 228, 0.33)',
         borderWidth: 1,
     },
     cardLocked: {

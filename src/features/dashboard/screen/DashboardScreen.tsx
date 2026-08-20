@@ -146,8 +146,8 @@ export function DashboardScreen() {
         {showCompleteOverlay && !isGameComplete && (
           <View style={styles.overlay}>
             <StarRating stars={getStars(errors)} style={styles.overlayStars} />
-            <Text style={styles.overlayTitle}>¡Congratulations!</Text>
-            <Text style={styles.overlaySubtitle}>Felicidades! has completado el nivel.</Text>
+            <Text style={styles.overlayTitle}>Congratulations!</Text>
+            <Text style={styles.overlaySubtitle}>¡Felicidades! has completado el nivel.</Text>
 
             {showNextLevelBtn && (
               <View style={styles.overlayActions}>
@@ -435,7 +435,7 @@ const styles = StyleSheet.create({
   actionButtonText: {
     color: 'white',
     fontSize: 20,
-    fontWeight: '900',
+    fontWeight: '800',
   },
   overlayActions: {
     width: '100%',
