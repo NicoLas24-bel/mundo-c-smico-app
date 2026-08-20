@@ -195,9 +195,9 @@ export const levels: Level[] = [
     objects: [
       { id: "dinosaur", word: "DINOSAUR", translation: "DINOSAURIO", top: 50, left: 65, width: 40, height: 25 },
       { id: "rainbow", word: "RAINBOW", translation: "ARCOIRIS", top: 52, left: 23, width: 10, height: 10 },
-      { id: "statue", word: "STATUE", translation: "ESTATUA", top: 25, left: 5, width: 15, height: 25 },
+      { id: "statue", word: "STATUE", translation: "ESTATUA", top: 25, left: 7, width: 15, height: 25 },
       { id: "guard", word: "GUARD", translation: "GUARDIA", top: 40, left: 90, width: 8, height: 20 },
-      { id: "vase", word: "VASE", translation: "FLORERO", top: 85, left: 95, width: 8, height: 8 },
+      { id: "vase", word: "VASE", translation: "FLORERO", top: 85, left: 93, width: 8, height: 8 },
       { id: "dress", word: "DRESS", translation: "VESTIDO", top: 80, left: 20, width: 8, height: 8 },
       { id: "skull", word: "SKULL", translation: "CRÁNEO", top: 25, left: 53, width: 10, height: 10 },
       { id: "egg", word: "EGG", translation: "HUEVO", top: 67, left: 58, width: 5, height: 10 },
