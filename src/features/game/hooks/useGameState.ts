@@ -73,19 +73,20 @@ export const useGameState = (paused = false) => {
   useEffect(() => {
     if (!isPlaying || paused || isLevelComplete || isGameComplete || isGameOver) return;
 
-    if (timeLeft <= 0) {
-      // Time's up: Game Over (unlock progress is kept)
-      playGameOver();
-      setIsGameOver(true);
-      return;
-    }
-
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      setTimeLeft((prev) => (prev <= 1 ? 0 : prev - 1));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, isPlaying, paused, isLevelComplete, isGameComplete, isGameOver, errors, restartLevel, playGameOver]);
+  }, [isPlaying, paused, isLevelComplete, isGameComplete, isGameOver]);
+
+  // Time's up: Game Over (unlock progress is kept)
+  useEffect(() => {
+    if (timeLeft === 0 && isPlaying && !paused && !isLevelComplete && !isGameComplete && !isGameOver) {
+      playGameOver();
+      setIsGameOver(true);
+    }
+  }, [timeLeft, isPlaying, paused, isLevelComplete, isGameComplete, isGameOver]);
 
   const startGame = () => {
     setIsPlaying(true);
