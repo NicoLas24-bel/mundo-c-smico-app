@@ -73,7 +73,11 @@ export const GameBoard = ({ level, foundObjects, selectedWord, onObjectSelect }:
               <View style={styles.foundIndicator}>
                 <CheckCircle2 color="white" size={28} />
               </View>
-            ) : null}
+            ) : (
+              <View style={styles.softSpot}>
+                <Text style={styles.softSpotText}>{obj.word}</Text>
+              </View>
+            )}
           </TouchableOpacity>
         );
       })}
@@ -150,6 +154,26 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  softSpot: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
+    backgroundColor: 'rgba(99,102,241,0.35)',
+    borderColor: 'rgba(168,85,247,0.7)',
+    borderWidth: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  softSpotText: {
+    color: 'white',
+    fontSize: 9,
+    fontWeight: '900',
+    textShadowColor: 'rgba(0,0,0,0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+    textAlign: 'center',
   },
   foundIndicator: {
     width: 48,
