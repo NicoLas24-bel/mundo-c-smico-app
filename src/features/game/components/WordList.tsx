@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   wordButtonSelected: {
     borderColor: 'rgba(99,102,241,0.8)',
-    backgroundColor: 'transparent', // gradient background
+    backgroundColor: 'transparent',
   },
   numberPill: {
     width: 24,

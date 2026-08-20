@@ -194,11 +194,13 @@ const styles = StyleSheet.create({
         gap: 14,
         padding: 12,
         borderRadius: 16,
-        borderColor: 'rgba(255,255,255,0.08)',
+        borderColor: 'rgba(169, 19, 228, 0.47)',
         borderWidth: 1,
     },
     cardLocked: {
         opacity: 0.55,
+        borderColor: 'rgba(255, 255, 255, 0.04)',
+
     },
     levelBadge: {
         width: 52,
