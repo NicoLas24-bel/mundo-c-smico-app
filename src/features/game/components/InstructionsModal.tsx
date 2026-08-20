@@ -49,7 +49,7 @@ export const InstructionsModal = ({ onStart }: any) => {
               Tienes <Text style={{ fontWeight: 'bold', color: 'white' }}>60 segundos</Text> y <Text style={{ fontWeight: 'bold', color: 'white' }}>3 vidas</Text> por nivel. Si fallas 3 veces o el tiempo se acaba, ¡pierdes el juego!
             </Text>
             <Text style={styles.warningText}>
-              ¡Tienes 3 vidas! ¿Podrás pasar todos los niveles?
+              ¿Podrás superar todos los niveles?
             </Text>
           </View>
 
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   buttonWrapper: {
-    width: '100%',
+    width: '90%',
     marginBottom: 16,
   },
   buttonBg: {

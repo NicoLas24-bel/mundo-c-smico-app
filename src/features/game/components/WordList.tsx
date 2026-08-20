@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated } from 'react-native';
 import { Check, Sparkles } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { WordDetailModal } from './WordDetailModal';
 
 function FlipWord({ word, translation, found, isSelected }: any) {
   const [rotate] = useState(() => new Animated.Value(0));
@@ -52,7 +53,19 @@ function FlipWord({ word, translation, found, isSelected }: any) {
   );
 }
 
-export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, levelId }: any) => {
+export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, levelId, onDetailOpen, onDetailClose }: any) => {
+  const [expandedWord, setExpandedWord] = useState<any>(null);
+
+  const handleOpenDetail = (obj: any) => {
+    setExpandedWord(obj);
+    if (onDetailOpen) onDetailOpen();
+  };
+
+  const handleCloseDetail = () => {
+    setExpandedWord(null);
+    if (onDetailClose) onDetailClose();
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -88,8 +101,7 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, leve
             return (
               <TouchableOpacity
                 key={`${levelId}-${obj.id}`}
-                onPress={() => onWordSelect(obj.id)}
-                disabled={isFound}
+                onPress={() => isFound ? handleOpenDetail(obj) : onWordSelect(obj.id)}
                 activeOpacity={0.7}
                 style={[
                   styles.wordButton,
@@ -140,6 +152,16 @@ export const WordList = ({ words, foundObjects, selectedWord, onWordSelect, leve
       <View style={styles.hintContainer}>
         <Text style={styles.hintText}>Select a word, then click the object in the scene</Text>
       </View>
+
+      {/* Detail Modal */}
+      {expandedWord && (
+        <WordDetailModal
+          isVisible={!!expandedWord}
+          word={expandedWord.word}
+          translation={expandedWord.translation}
+          onClose={handleCloseDetail}
+        />
+      )}
     </View>
   );
 };

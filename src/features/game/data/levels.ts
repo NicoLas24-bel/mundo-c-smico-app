@@ -24,7 +24,7 @@ export const levels: Level[] = [
     image: require('../../../../assets/images/levels/bedroom/bedroom.png'),
     objects: [
       { id: "bed", word: "BED", translation: "CAMA", top: 63, left: 50, width: 45, height: 22 },
-      { id: "armchair", word: "ARMCHAIR", translation: "SILLON", top: 64, left: 85, width: 18, height: 22 },
+      { id: "armchair", word: "ARMCHAIR", translation: "SILLÓN", top: 64, left: 85, width: 18, height: 22 },
       { id: "window", word: "WINDOW", translation: "VENTANA", top: 28, left: 24, width: 23, height: 24 },
       { id: "lamp", word: "LAMP", translation: "LÁMPARA", top: 40, left: 46, width: 8, height: 16 },
       { id: "bear", word: "BEAR", translation: "OSO", top: 84, left: 69, width: 10, height: 10 },
@@ -197,12 +197,12 @@ export const levels: Level[] = [
       { id: "rainbow", word: "RAINBOW", translation: "ARCOIRIS", top: 52, left: 23, width: 10, height: 10 },
       { id: "statue", word: "STATUE", translation: "ESTATUA", top: 25, left: 7, width: 15, height: 25 },
       { id: "guard", word: "GUARD", translation: "GUARDIA", top: 40, left: 90, width: 8, height: 20 },
-      { id: "vase", word: "VASE", translation: "FLORERO", top: 85, left: 93, width: 8, height: 8 },
+      { id: "vase", word: "VASE", translation: "FLORERO", top: 85, left: 94, width: 8, height: 8 },
       { id: "dress", word: "DRESS", translation: "VESTIDO", top: 80, left: 20, width: 8, height: 8 },
       { id: "skull", word: "SKULL", translation: "CRÁNEO", top: 25, left: 53, width: 10, height: 10 },
       { id: "egg", word: "EGG", translation: "HUEVO", top: 67, left: 58, width: 5, height: 10 },
       { id: "purse", word: "PURSE", translation: "CARTERA", top: 95, left: 73, width: 8, height: 8 },
-      { id: "velvet_rope", word: "VELVET ROPE", translation: "CINTA DE TERCIOPELO", top: 74, left: 74, width: 10, height: 8 },
+      { id: "velvet_rope", word: "VELVET ROPE", translation: "CUERDA DE TERCIOPELO", top: 74, left: 74, width: 10, height: 8 },
 
     ]
   },
@@ -219,7 +219,7 @@ export const levels: Level[] = [
       { id: "yoga_mat", word: "YOGA MAT", translation: "ESTERILLA", top: 74, left: 50, width: 10, height: 10 },
       { id: "water_bottle", word: "WATER BOTTLE", translation: "BOTELLA DE AGUA", top: 85, left: 68, width: 8, height: 8 },
       { id: "mirror", word: "MIRROR", translation: "ESPEJO", top: 53, left: 20, width: 15, height: 25 },
-      { id: "jump_rope", word: "JUMP ROPE", translation: "CUERDA", top: 93, left: 45, width: 10, height: 10 },
+      { id: "jump_rope", word: "JUMP ROPE", translation: "CUERDA PARA SALTAR", top: 93, left: 45, width: 10, height: 10 },
       { id: "barbell", word: "BARBELL", translation: "BARRA", top: 75, left: 85, width: 20, height: 30 },
       { id: "kettlebell", word: "KETTLEBELL", translation: "PESA RUSA", top: 82, left: 18, width: 8, height: 8 },
 
