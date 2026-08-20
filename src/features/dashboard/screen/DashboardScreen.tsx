@@ -34,6 +34,7 @@ export function DashboardScreen() {
     isGameOver,
     timeLeft,
     isPlaying,
+    timerEnabled,
     startGame,
     handleWordSelect,
     handleObjectSelect,
@@ -116,7 +117,7 @@ export function DashboardScreen() {
 
           <View style={styles.gameLayout}>
             <View style={styles.boardContainer}>
-              <GameTimer timeLeft={timeLeft} maxTime={60} />
+              {timerEnabled && <GameTimer timeLeft={timeLeft} maxTime={60} />}
 
               <GameBoard
                 level={currentLevel}

@@ -4,9 +4,10 @@ const SETTINGS_KEY = 'app_settings';
 
 export type AppSettings = {
   soundEnabled: boolean;
+  timerEnabled: boolean;
 };
 
-const DEFAULT_SETTINGS: AppSettings = { soundEnabled: true };
+const DEFAULT_SETTINGS: AppSettings = { soundEnabled: true, timerEnabled: true };
 
 let cached: AppSettings = { ...DEFAULT_SETTINGS };
 

@@ -8,6 +8,7 @@ export { WordList } from './components/WordList';
 
 // Hooks
 export { useGameState } from './hooks/useGameState';
+export { useGameTimer } from './hooks/useGameTimer';
 export { useSound } from './hooks/useSound';
 
 // Data

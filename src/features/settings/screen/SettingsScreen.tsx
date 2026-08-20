@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { View, Text, Switch, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
-import { ChevronLeft, Volume2, VolumeX } from 'lucide-react-native';
+import { ChevronLeft, Volume2, VolumeX, Timer } from 'lucide-react-native';
 import { navigate } from '@/router';
 import { loadSettings, saveSettings } from '../utils/settings';
 import { useSound } from '../../game/hooks/useSound';
@@ -10,6 +10,7 @@ import { useSound } from '../../game/hooks/useSound';
 export function SettingsScreen() {
   const { playButton } = useSound();
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [timerEnabled, setTimerEnabled] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -17,6 +18,7 @@ export function SettingsScreen() {
       loadSettings().then((settings) => {
         if (active) {
           setSoundEnabled(settings.soundEnabled);
+          setTimerEnabled(settings.timerEnabled);
         }
       });
       return () => {
@@ -27,10 +29,16 @@ export function SettingsScreen() {
 
   const handleToggleSound = (value: boolean) => {
     setSoundEnabled(value);
-    saveSettings({ soundEnabled: value });
+    saveSettings({ soundEnabled: value, timerEnabled });
     if (value) {
       playButton();
     }
+  };
+
+  const handleToggleTimer = (value: boolean) => {
+    setTimerEnabled(value);
+    saveSettings({ soundEnabled, timerEnabled: value });
+    playButton();
   };
 
   const handleBack = () => {
@@ -68,6 +76,22 @@ export function SettingsScreen() {
             <Switch
               value={soundEnabled}
               onValueChange={handleToggleSound}
+              trackColor={{ false: '#475569', true: '#a855f7' }}
+              thumbColor="white"
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity activeOpacity={0.9} style={styles.row} onPress={() => handleToggleTimer(!timerEnabled)}>
+            <View style={[styles.iconCircle, timerEnabled ? styles.iconCircleOn : styles.iconCircleOff]}>
+              <Timer color={timerEnabled ? '#a855f7' : '#64748b'} size={22} />
+            </View>
+            <View style={styles.rowInfo}>
+              <Text style={styles.rowLabel}>Temporizador</Text>
+              <Text style={styles.rowDesc}>Cuenta regresiva en el juego</Text>
+            </View>
+            <Switch
+              value={timerEnabled}
+              onValueChange={handleToggleTimer}
               trackColor={{ false: '#475569', true: '#a855f7' }}
               thumbColor="white"
             />

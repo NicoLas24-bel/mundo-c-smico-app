@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { levels } from '../data/levels';
 import { saveProgress, loadProgress, clearProgress } from '../utils/storage';
+import { loadSettings } from '../../settings/utils/settings';
 import { useSound } from './useSound';
+import { useGameTimer } from './useGameTimer';
 
 export const useGameState = (paused = false) => {
   const { playSelectCorrect, playError, playGameOver } = useSound();
@@ -41,7 +43,6 @@ export const useGameState = (paused = false) => {
   }, [feedback.message]);
 
   // Timer and Play state
-  const [timeLeft, setTimeLeft] = useState(60);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
 
@@ -50,6 +51,28 @@ export const useGameState = (paused = false) => {
   // Derived state to avoid effect
   const isLevelComplete = currentLevel && foundObjects.length === currentLevel.objects.length;
   const isGameComplete = isLevelComplete && currentLevelIndex === levels.length - 1;
+
+  // Timer preference from settings (enabled by default)
+  const [timerEnabled, setTimerEnabled] = useState(true);
+  useEffect(() => {
+    let active = true;
+    loadSettings().then((settings) => {
+      if (active) setTimerEnabled(settings.timerEnabled);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Optional countdown timer (isolated in useGameTimer for reusability)
+  const { timeLeft, reset: resetTimer } = useGameTimer({
+    enabled: timerEnabled,
+    isRunning: isPlaying && !paused && !isLevelComplete && !isGameComplete && !isGameOver,
+    onTimeUp: () => {
+      playGameOver();
+      setIsGameOver(true);
+    },
+  });
 
   // Save state on change (after hydration, so it never overwrites saved progress)
   useEffect(() => {
@@ -65,28 +88,9 @@ export const useGameState = (paused = false) => {
     setFoundObjects([]);
     setSelectedWord(null);
     setFeedback({ message: '', type: '' });
-    setTimeLeft(60);
+    resetTimer();
     setIsGameOver(false);
-  }, []);
-
-  // Timer logic
-  useEffect(() => {
-    if (!isPlaying || paused || isLevelComplete || isGameComplete || isGameOver) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev <= 1 ? 0 : prev - 1));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isPlaying, paused, isLevelComplete, isGameComplete, isGameOver]);
-
-  // Time's up: Game Over (unlock progress is kept)
-  useEffect(() => {
-    if (timeLeft === 0 && isPlaying && !paused && !isLevelComplete && !isGameComplete && !isGameOver) {
-      playGameOver();
-      setIsGameOver(true);
-    }
-  }, [timeLeft, isPlaying, paused, isLevelComplete, isGameComplete, isGameOver]);
+  }, [resetTimer]);
 
   const startGame = () => {
     setIsPlaying(true);
@@ -146,7 +150,7 @@ export const useGameState = (paused = false) => {
       setFoundObjects([]);
       setSelectedWord(null);
       setFeedback({ message: '', type: '' });
-      setTimeLeft(60); // Reset timer for next level
+      resetTimer(); // Reset timer for next level
     }
   };
 
@@ -158,7 +162,7 @@ export const useGameState = (paused = false) => {
     setFoundObjects([]);
     setSelectedWord(null);
     setFeedback({ message: '', type: '' });
-    setTimeLeft(60);
+    resetTimer();
     setIsPlaying(false);
     setIsGameOver(false);
   };
@@ -177,6 +181,7 @@ export const useGameState = (paused = false) => {
     isGameOver,
     timeLeft,
     isPlaying,
+    timerEnabled,
     startGame,
     handleWordSelect,
     handleObjectSelect,
