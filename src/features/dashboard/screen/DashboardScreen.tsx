@@ -86,15 +86,16 @@ export function DashboardScreen() {
   }, [isLevelComplete, isGameOver, isGameComplete]);
 
   useEffect(() => {
-    if (showCompleteOverlay && !isGameComplete) {
+    if (showCompleteOverlay) {
+      // Retrasar los botones un poco después de mostrar el overlay
       const timer = setTimeout(() => {
         setShowNextLevelBtn(true);
-      }, 1000);
+      }, 1000); // Aparece tras 1s de haber mostrado el overlay
       return () => clearTimeout(timer);
     } else {
       setShowNextLevelBtn(false);
     }
-  }, [showCompleteOverlay, isGameComplete]);
+  }, [showCompleteOverlay]);
 
   if (!currentLevel) return null;
 
@@ -192,23 +193,25 @@ export function DashboardScreen() {
             <Text style={styles.overlaySubtitle}>Amazing! You completed all {totalLevels} levels!</Text>
             <Text style={styles.overlayText}>You are an English vocabulary champion.</Text>
 
-            <View style={styles.buttonsRow}>
-              <TouchableOpacity activeOpacity={0.8} onPress={() => { playButton(); restartGame(); }}>
-                <LinearGradient colors={['#6366f1', '#a855f7']} style={styles.actionButtonSm}>
-                  <RotateCcw color="white" size={20} />
-                  <Text style={styles.actionButtonTextSm}>Play Again</Text>
-                </LinearGradient>
-              </TouchableOpacity>
+            {showNextLevelBtn && (
+              <View style={styles.buttonsRow}>
+                <TouchableOpacity activeOpacity={0.8} onPress={() => { playButton(); restartGame(); }}>
+                  <LinearGradient colors={['#6366f1', '#a855f7']} style={styles.actionButtonSm}>
+                    <RotateCcw color="white" size={20} />
+                    <Text style={styles.actionButtonTextSm}>Play Again</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.outlineButton}
-                onPress={() => { playButton(); navigate.back(); }}
-              >
-                <HomeIcon color="#e2e8f0" size={20} />
-                <Text style={styles.outlineButtonText}>Home</Text>
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.outlineButton}
+                  onPress={() => { playButton(); navigate.back(); }}
+                >
+                  <HomeIcon color="#e2e8f0" size={20} />
+                  <Text style={styles.outlineButtonText}>Home</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         )}
 

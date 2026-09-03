@@ -13,6 +13,19 @@ export function HangmanScreen() {
     const { playButton } = useSound();
     const { gameState, guessLetter, startNewGame, resetCurrentGame } = useHangmanGame();
     const [showHint, setShowHint] = useState(false);
+    const [showActionBtn, setShowActionBtn] = useState(false);
+
+    useEffect(() => {
+        // Manejar el retardo del botón de continuar/reintentar
+        if (gameState?.status && gameState.status !== 'playing') {
+            const timer = setTimeout(() => {
+                setShowActionBtn(true);
+            }, 1500);
+            return () => clearTimeout(timer);
+        } else {
+            setShowActionBtn(false);
+        }
+    }, [gameState?.status]);
 
     useEffect(() => {
         // Reset hint when word changes
@@ -136,24 +149,26 @@ export function HangmanScreen() {
 
                             <View style={styles.modalDivider} />
 
-                            {/* Botón de acción */}
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                onPress={status === 'won' ? startNewGame : resetCurrentGame}
-                                style={styles.nextButton}
-                            >
-                                <LinearGradient
-                                    colors={['#6366f1', '#a855f7']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 1 }}
-                                    style={styles.nextButtonGradient}
+                            {/* Botón de acción (Aparece con retardo) */}
+                            {showActionBtn && (
+                                <TouchableOpacity
+                                    activeOpacity={0.8}
+                                    onPress={status === 'won' ? startNewGame : resetCurrentGame}
+                                    style={styles.nextButton}
                                 >
-                                    <RefreshCw color="white" size={18} />
-                                    <Text style={styles.nextButtonText}>
-                                        {status === 'won' ? 'Siguiente Palabra' : 'Reintentar'}
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
+                                    <LinearGradient
+                                        colors={['#6366f1', '#a855f7']}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 1, y: 1 }}
+                                        style={styles.nextButtonGradient}
+                                    >
+                                        <RefreshCw color="white" size={18} />
+                                        <Text style={styles.nextButtonText}>
+                                            {status === 'won' ? 'Siguiente Palabra' : 'Reintentar'}
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            )}
                         </LinearGradient>
                     </Pressable>
                 </Pressable>

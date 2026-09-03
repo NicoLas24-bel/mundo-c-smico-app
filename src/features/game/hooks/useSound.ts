@@ -78,17 +78,15 @@ export const useSound = () => {
       winPlayer.seekTo(0);
       winPlayer.play();
 
-      // Al terminar el sonido de victoria, encadenar los aplausos
-      const subscription = winPlayer.addListener('playbackStatusUpdate', (status) => {
-        if (status.didJustFinish) {
-          subscription.remove();
-          try {
-            aplausosPlayer.volume = 0.75;
-            aplausosPlayer.seekTo(0);
-            aplausosPlayer.play();
-          } catch (e) {}
-        }
-      });
+      // Al terminar (o después de 1.5s) el sonido de victoria, encadenar los aplausos
+      setTimeout(() => {
+        try {
+          winPlayer.pause();
+          aplausosPlayer.volume = 0.75;
+          aplausosPlayer.seekTo(0);
+          aplausosPlayer.play();
+        } catch (e) {}
+      }, 1500);
     } catch (e) {}
   };
 
