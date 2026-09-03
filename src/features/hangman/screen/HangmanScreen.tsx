@@ -17,11 +17,13 @@ export function HangmanScreen() {
 
     useEffect(() => {
         // Manejar el retardo del botón de continuar/reintentar
-        if (gameState?.status && gameState.status !== 'playing') {
+        if (gameState?.status === 'won') {
             const timer = setTimeout(() => {
                 setShowActionBtn(true);
             }, 1500);
             return () => clearTimeout(timer);
+        } else if (gameState?.status === 'lost') {
+            setShowActionBtn(true);
         } else {
             setShowActionBtn(false);
         }
