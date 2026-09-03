@@ -14,31 +14,31 @@ export function WelcomeScreen() {
     const heartbeat = Animated.loop(
       Animated.sequence([
         Animated.timing(pulse, {
-          toValue: 1.18,
-          duration: 220,
+          toValue: 1.75,
+          duration: 2000,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.timing(pulse, {
           toValue: 1,
-          duration: 220,
+          duration: 2000,
           easing: Easing.in(Easing.quad),
           useNativeDriver: true,
         }),
-        Animated.delay(550),
+        Animated.delay(1000),
         Animated.timing(pulse, {
-          toValue: 1.08,
-          duration: 180,
+          toValue: 1.75,
+          duration: 2000,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.timing(pulse, {
           toValue: 1,
-          duration: 180,
+          duration: 2000,
           easing: Easing.in(Easing.quad),
           useNativeDriver: true,
         }),
-        Animated.delay(700),
+        Animated.delay(2000),
       ])
     );
     heartbeat.start();
