@@ -93,10 +93,6 @@ export function WelcomeScreen() {
           <Text style={styles.subtitle}>Juego educativo para todos</Text>
         </View>
 
-        <Text style={styles.description}>
-          Selecciona una palabra y toca la imagen para encontrar el objeto correcto.
-        </Text>
-
         {/* Menu buttons */}
         <View style={styles.menu}>
 
@@ -191,7 +187,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 60,
   },
   title: {
     fontSize: 38,

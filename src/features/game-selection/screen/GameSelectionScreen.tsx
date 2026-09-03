@@ -47,10 +47,6 @@ export function GameSelectionScreen() {
                 {/* Cards */}
                 <View style={styles.content}>
 
-                    <Text style={styles.instructionText}>
-                        Elige tu modalidad favorita y comienza a aprender.
-                    </Text>
-
                     {/* Tarjeta 1: Encuentra el Objeto */}
                     <TouchableOpacity activeOpacity={0.85} onPress={handleFindObjects} style={styles.cardWrapper}>
                         <LinearGradient
@@ -134,13 +130,6 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         letterSpacing: 1,
         textAlign: 'center',
-    },
-    instructionText: {
-        color: '#94a3b8',
-        fontSize: 15,
-        fontWeight: '500',
-        textAlign: 'center',
-        marginBottom: 32,
     },
     content: {
         flex: 1,

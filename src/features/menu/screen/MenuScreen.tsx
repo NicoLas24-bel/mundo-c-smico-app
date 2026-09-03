@@ -47,7 +47,7 @@ export function MenuScreen() {
 
     const handleBack = () => {
         playButton();
-        navigate.toWelcome();
+        navigate.toGameSelection();
     };
 
     return (
