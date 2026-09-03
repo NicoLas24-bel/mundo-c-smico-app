@@ -23,12 +23,12 @@ export function HangmanFigure({ mistakes }: HangmanFigureProps) {
         {mistakes > 3 && <View style={styles.rightArm} />}
         {mistakes > 4 && <View style={styles.leftLeg} />}
         {mistakes > 5 && <View style={styles.rightLeg} />}
-        
+
         {/* If lost (6 mistakes), maybe add X eyes (simulated with crossed lines in head) */}
         {mistakes >= 6 && (
           <>
-            <View style={[styles.eye, styles.leftEye]}><View style={styles.eyeCross1}/><View style={styles.eyeCross2}/></View>
-            <View style={[styles.eye, styles.rightEye]}><View style={styles.eyeCross1}/><View style={styles.eyeCross2}/></View>
+            <View style={[styles.eye, styles.leftEye]}><View style={styles.eyeCross1} /><View style={styles.eyeCross2} /></View>
+            <View style={[styles.eye, styles.rightEye]}><View style={styles.eyeCross1} /><View style={styles.eyeCross2} /></View>
             <View style={styles.sadMouth} />
           </>
         )}
@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
     width: 120,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginBottom: 20,
+    marginBottom: 50,
+    alignSelf: 'center',
   },
   base: {
     width: 100,
@@ -93,9 +94,9 @@ const styles = StyleSheet.create({
   },
   body: {
     width: 3,
-    height: 40,
+    height: 33,
     backgroundColor: 'white',
-    marginLeft: -1.5,
+    right: 8
   },
   leftArm: {
     position: 'absolute',
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   rightLeg: {
     position: 'absolute',
     top: 70,
-    left: -6,
+    left: -3,
     width: 18,
     height: 3,
     backgroundColor: 'white',
