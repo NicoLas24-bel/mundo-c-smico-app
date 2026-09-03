@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Heart, RefreshCw } from 'lucide-react-native';
+import { ChevronLeft, Heart, RefreshCw, Eye } from 'lucide-react-native';
 import { navigate } from '@/router';
 import { useSound } from '../../game/hooks/useSound';
 import { useHangmanGame } from '../hooks/useHangmanGame';
 import { HangmanKeyboard } from '../components/HangmanKeyboard';
+import { HangmanFigure } from '../components/HangmanFigure';
 
 export function HangmanScreen() {
     const { playButton } = useSound();
-    const { gameState, guessLetter, startNewGame } = useHangmanGame();
+    const { gameState, guessLetter, startNewGame, resetCurrentGame } = useHangmanGame();
+    const [showHint, setShowHint] = useState(false);
+
+    useEffect(() => {
+        // Reset hint when word changes
+        if (gameState?.word) {
+            setShowHint(false);
+        }
+    }, [gameState?.word]);
 
     const handleBack = () => {
         playButton();
@@ -52,10 +61,23 @@ export function HangmanScreen() {
 
                 <View style={styles.content}>
                     
+                    {/* Figura del Ahorcado */}
+                    <HangmanFigure mistakes={mistakes} />
+
                     {/* Pista (Translation) */}
                     <View style={styles.hintContainer}>
-                        <Text style={styles.hintLabel}>Pista</Text>
-                        <Text style={styles.hintText}>{translation}</Text>
+                        {!showHint ? (
+                            <TouchableOpacity 
+                                activeOpacity={0.7} 
+                                style={styles.showHintBtn}
+                                onPress={() => setShowHint(true)}
+                            >
+                                <Eye color="#c4b5fd" size={20} />
+                                <Text style={styles.showHintText}>Ver pista</Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <Text style={styles.hintText}>{translation}</Text>
+                        )}
                     </View>
 
                     {/* Palabra Oculta */}
@@ -85,15 +107,21 @@ export function HangmanScreen() {
                             <Text style={[styles.resultText, { color: status === 'won' ? '#4ade80' : '#f87171' }]}>
                                 {status === 'won' ? '¡Excelente!' : 'Game Over'}
                             </Text>
-                            <TouchableOpacity activeOpacity={0.8} onPress={startNewGame} style={styles.nextButton}>
+                            <TouchableOpacity 
+                                activeOpacity={0.8} 
+                                onPress={status === 'won' ? startNewGame : resetCurrentGame} 
+                                style={styles.nextButton}
+                            >
                                 <LinearGradient
-                                    colors={['#db2777', '#f43f5e']}
+                                    colors={status === 'won' ? ['#22c55e', '#10b981'] : ['#db2777', '#f43f5e']}
                                     start={{ x: 0, y: 0 }}
                                     end={{ x: 1, y: 0 }}
                                     style={styles.nextButtonGradient}
                                 >
                                     <RefreshCw color="white" size={20} />
-                                    <Text style={styles.nextButtonText}>Siguiente Palabra</Text>
+                                    <Text style={styles.nextButtonText}>
+                                        {status === 'won' ? 'Siguiente Palabra' : 'Reintentar'}
+                                    </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
                         </View>
@@ -148,20 +176,38 @@ const styles = StyleSheet.create({
     },
     hintContainer: {
         alignItems: 'center',
-        marginTop: 20,
-        marginBottom: 40,
+        marginTop: 10,
+        marginBottom: 20,
+        height: 40,
+        justifyContent: 'center',
     },
-    hintLabel: {
+    showHintBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        backgroundColor: 'rgba(124,58,237,0.15)',
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: 'rgba(168,85,247,0.4)',
+    },
+    showHintText: {
         color: '#c4b5fd',
         fontSize: 14,
         fontWeight: '700',
+    },
+    hintLabel: {
+        color: '#c4b5fd',
+        fontSize: 12,
+        fontWeight: '700',
         textTransform: 'uppercase',
         letterSpacing: 1.5,
-        marginBottom: 8,
+        marginBottom: 4,
     },
     hintText: {
         color: 'white',
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: '900',
         textAlign: 'center',
     },

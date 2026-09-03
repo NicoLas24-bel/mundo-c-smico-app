@@ -31,6 +31,9 @@ export function GameSelectionScreen() {
                 locations={[0, 0.5, 1]}
                 style={StyleSheet.absoluteFill}
             />
+            {/* Ambient glows */}
+            <View style={styles.glowTop} />
+            <View style={styles.glowBottom} />
 
             <SafeAreaView style={styles.safeArea}>
                 {/* Header */}
@@ -46,20 +49,28 @@ export function GameSelectionScreen() {
 
                 {/* Cards */}
                 <View style={styles.content}>
+                    
+                    <Text style={styles.instructionText}>
+                        Elige tu modalidad favorita y comienza a aprender.
+                    </Text>
+
                     {/* Tarjeta 1: Encuentra el Objeto */}
                     <TouchableOpacity activeOpacity={0.85} onPress={handleFindObjects} style={styles.cardWrapper}>
                         <LinearGradient
-                            colors={['#6d28d9', '#a855f7']}
+                            colors={['rgba(99,102,241,0.2)', 'rgba(168,85,247,0.1)']}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 1 }}
                             style={styles.card}
                         >
-                            <View style={styles.iconContainer}>
-                                <Search color="white" size={32} />
+                            <View style={styles.cardBorder}>
+                                <LinearGradient colors={['#6366f1', '#a855f7']} style={StyleSheet.absoluteFill} />
+                            </View>
+                            <View style={[styles.iconContainer, { backgroundColor: '#6366f1' }]}>
+                                <Search color="white" size={26} strokeWidth={2.5} />
                             </View>
                             <View style={styles.textContainer}>
                                 <Text style={styles.cardTitle}>Encuentra el Objeto</Text>
-                                <Text style={styles.cardDescription}>Busca las palabras en los escenarios interactivos.</Text>
+                                <Text style={styles.cardDescription}>Busca las palabras ocultas en escenarios interactivos llenos de color.</Text>
                             </View>
                         </LinearGradient>
                     </TouchableOpacity>
@@ -67,17 +78,20 @@ export function GameSelectionScreen() {
                     {/* Tarjeta 2: Ahorcado */}
                     <TouchableOpacity activeOpacity={0.85} onPress={handleHangman} style={styles.cardWrapper}>
                         <LinearGradient
-                            colors={['#db2777', '#f43f5e']}
+                            colors={['rgba(219,39,119,0.2)', 'rgba(244,63,94,0.1)']}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 1 }}
                             style={styles.card}
                         >
-                            <View style={styles.iconContainer}>
-                                <Baseline color="white" size={32} />
+                            <View style={styles.cardBorder}>
+                                <LinearGradient colors={['#db2777', '#f43f5e']} style={StyleSheet.absoluteFill} />
+                            </View>
+                            <View style={[styles.iconContainer, { backgroundColor: '#f43f5e' }]}>
+                                <Baseline color="white" size={26} strokeWidth={2.5} />
                             </View>
                             <View style={styles.textContainer}>
                                 <Text style={styles.cardTitle}>El Ahorcado</Text>
-                                <Text style={styles.cardDescription}>Adivina las palabras letra por letra antes de perder las vidas.</Text>
+                                <Text style={styles.cardDescription}>Descubre la palabra letra por letra antes de que se acaben tus vidas.</Text>
                             </View>
                         </LinearGradient>
                     </TouchableOpacity>
@@ -91,6 +105,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#08011f',
+    },
+    glowTop: {
+        position: 'absolute', width: 300, height: 300, borderRadius: 150,
+        backgroundColor: 'rgba(99,102,241,0.15)', top: -100, left: -100,
+    },
+    glowBottom: {
+        position: 'absolute', width: 300, height: 300, borderRadius: 150,
+        backgroundColor: 'rgba(219,39,119,0.15)', bottom: -100, right: -100,
     },
     safeArea: {
         flex: 1,
@@ -124,48 +146,62 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
         textAlign: 'center',
     },
+    instructionText: {
+        color: '#94a3b8',
+        fontSize: 15,
+        fontWeight: '500',
+        textAlign: 'center',
+        marginBottom: 32,
+    },
     content: {
         flex: 1,
         paddingHorizontal: 24,
-        justifyContent: 'center',
+        paddingTop: 40,
         gap: 20,
     },
     cardWrapper: {
-        borderRadius: 24,
-        elevation: 8,
-        shadowColor: '#a855f7',
-        shadowOpacity: 0.3,
-        shadowRadius: 16,
-        shadowOffset: { width: 0, height: 4 },
+        borderRadius: 20,
+        overflow: 'hidden',
+    },
+    cardBorder: {
+        position: 'absolute',
+        top: 0, left: 0, right: 0,
+        height: 2,
     },
     card: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 24,
-        borderRadius: 24,
-        gap: 20,
+        borderRadius: 20,
+        gap: 18,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.05)',
     },
     iconContainer: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        backgroundColor: 'rgba(255,255,255,0.2)',
+        width: 56,
+        height: 56,
+        borderRadius: 18,
         alignItems: 'center',
         justifyContent: 'center',
+        shadowColor: 'black',
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 6,
     },
     textContainer: {
         flex: 1,
     },
     cardTitle: {
         color: 'white',
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: '900',
         marginBottom: 6,
     },
     cardDescription: {
-        color: 'rgba(255,255,255,0.8)',
-        fontSize: 14,
-        lineHeight: 20,
+        color: '#cbd5e1',
+        fontSize: 13,
+        lineHeight: 18,
         fontWeight: '500',
     },
 });

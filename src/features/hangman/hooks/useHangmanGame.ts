@@ -45,6 +45,18 @@ export function useHangmanGame() {
     startNewGame();
   }, [startNewGame]);
 
+  const resetCurrentGame = useCallback(() => {
+    setGameState((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        guessedLetters: new Set<string>(),
+        mistakes: 0,
+        status: 'playing',
+      };
+    });
+  }, []);
+
   const guessLetter = useCallback((letter: string) => {
     if (!gameState || gameState.status !== 'playing') return;
 
@@ -83,5 +95,6 @@ export function useHangmanGame() {
     gameState,
     guessLetter,
     startNewGame,
+    resetCurrentGame,
   };
 }
