@@ -74,28 +74,17 @@ export function WelcomeScreen() {
 
         {/* Logo */}
         <View style={styles.logoContainer}>
-          <LinearGradient
-            colors={['#6366f1', '#a855f7']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.logoCircle}
-          >
-            <Animated.Image
-              source={require('../../../../assets/images/icon/icon-remove.png')}
-              style={[
-                styles.logoImage,
-                {
-                  transform: [{ scale: pulse }],
-                },
-              ]}
-              resizeMode="contain"
-            />
-          </LinearGradient>
-        </View>
 
-        {/* Company badge */}
-        <View style={styles.badgeContainer}>
-          <Text style={styles.badgeText}>MundoCosmico.cl</Text>
+          <Animated.Image
+            source={require('../../../../assets/images/icon/icon-remove.png')}
+            style={[
+              styles.logoImage,
+              {
+                transform: [{ scale: pulse }],
+              },
+            ]}
+            resizeMode="contain"
+          />
         </View>
 
         {/* Title */}
@@ -143,7 +132,7 @@ export function WelcomeScreen() {
 
         </View>
 
-        <Text style={styles.footerText}>© MundoMagico · Juego gratuito</Text>
+        <Text style={styles.footerText}>© mundocosmico.cl</Text>
 
       </SafeAreaView>
     </View>
@@ -173,15 +162,15 @@ const styles = StyleSheet.create({
     borderRadius: 48,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#a855f7',
+    shadowColor: 'white',
     shadowOpacity: 0.45,
     shadowRadius: 24,
     shadowOffset: { width: 0, height: 8 },
     elevation: 12,
   },
   logoImage: {
-    width: 56,
-    height: 56,
+    width: 100,
+    height: 100,
   },
   badgeContainer: {
     alignItems: 'center',
