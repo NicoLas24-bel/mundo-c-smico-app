@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, Heart, RefreshCw, Eye } from 'lucide-react-native';
@@ -99,32 +99,6 @@ export function HangmanScreen() {
                         })}
                     </View>
 
-                    {/* Estado de Victoria/Derrota */}
-                    {status !== 'playing' && (
-                        <View style={styles.resultContainer}>
-                            <Text style={[styles.resultText, { color: status === 'won' ? '#4ade80' : '#f87171' }]}>
-                                {status === 'won' ? '¡Excelente!' : 'Game Over'}
-                            </Text>
-                            <TouchableOpacity 
-                                activeOpacity={0.8} 
-                                onPress={status === 'won' ? startNewGame : resetCurrentGame} 
-                                style={styles.nextButton}
-                            >
-                                <LinearGradient
-                                    colors={status === 'won' ? ['#22c55e', '#10b981'] : ['#db2777', '#f43f5e']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 0 }}
-                                    style={styles.nextButtonGradient}
-                                >
-                                    <RefreshCw color="white" size={20} />
-                                    <Text style={styles.nextButtonText}>
-                                        {status === 'won' ? 'Siguiente Palabra' : 'Reintentar'}
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-
                     <View style={{ flex: 1 }} />
 
                     {/* Teclado */}
@@ -135,6 +109,39 @@ export function HangmanScreen() {
                     />
                 </View>
             </SafeAreaView>
+
+            {/* Modal de Victoria / Derrota */}
+            <Modal
+                visible={status !== 'playing'}
+                transparent
+                animationType="fade"
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={[styles.modalTitle, { color: status === 'won' ? '#4ade80' : '#f87171' }]}>
+                            {status === 'won' ? '¡Excelente!' : 'Game Over'}
+                        </Text>
+                        
+                        <TouchableOpacity 
+                            activeOpacity={0.8} 
+                            onPress={status === 'won' ? startNewGame : resetCurrentGame} 
+                            style={styles.nextButton}
+                        >
+                            <LinearGradient
+                                colors={status === 'won' ? ['#22c55e', '#10b981'] : ['#db2777', '#f43f5e']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}
+                                style={styles.nextButtonGradient}
+                            >
+                                <RefreshCw color="white" size={20} />
+                                <Text style={styles.nextButtonText}>
+                                    {status === 'won' ? 'Siguiente Palabra' : 'Reintentar'}
+                                </Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
@@ -238,14 +245,33 @@ const styles = StyleSheet.create({
     space: {
         width: 20,
     },
-    resultContainer: {
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 40,
-        gap: 16,
+        padding: 20,
     },
-    resultText: {
+    modalContent: {
+        backgroundColor: '#1e293b',
+        borderRadius: 24,
+        padding: 32,
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: 320,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.1)',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.5,
+        shadowRadius: 20,
+        elevation: 10,
+    },
+    modalTitle: {
         fontSize: 32,
         fontWeight: '900',
+        marginBottom: 24,
+        textAlign: 'center',
     },
     nextButton: {
         borderRadius: 16,
