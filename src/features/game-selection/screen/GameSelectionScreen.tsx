@@ -31,9 +31,6 @@ export function GameSelectionScreen() {
                 locations={[0, 0.5, 1]}
                 style={StyleSheet.absoluteFill}
             />
-            {/* Ambient glows */}
-            <View style={styles.glowTop} />
-            <View style={styles.glowBottom} />
 
             <SafeAreaView style={styles.safeArea}>
                 {/* Header */}
@@ -49,7 +46,7 @@ export function GameSelectionScreen() {
 
                 {/* Cards */}
                 <View style={styles.content}>
-                    
+
                     <Text style={styles.instructionText}>
                         Elige tu modalidad favorita y comienza a aprender.
                     </Text>
@@ -105,14 +102,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#08011f',
-    },
-    glowTop: {
-        position: 'absolute', width: 300, height: 300, borderRadius: 150,
-        backgroundColor: 'rgba(99,102,241,0.15)', top: -100, left: -100,
-    },
-    glowBottom: {
-        position: 'absolute', width: 300, height: 300, borderRadius: 150,
-        backgroundColor: 'rgba(219,39,119,0.15)', bottom: -100, right: -100,
     },
     safeArea: {
         flex: 1,
