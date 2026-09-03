@@ -80,16 +80,16 @@ export function WelcomeScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.logoCircle}
           >
-            <Animated.Text
+            <Animated.Image
+              source={require('../../../../assets/images/icon/icon-remove.png')}
               style={[
-                styles.logoEmoji,
+                styles.logoImage,
                 {
                   transform: [{ scale: pulse }],
                 },
               ]}
-            >
-              🌍
-            </Animated.Text>
+              resizeMode="contain"
+            />
           </LinearGradient>
         </View>
 
@@ -179,9 +179,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     elevation: 12,
   },
-  logoEmoji: {
-    fontSize: 52,
-
+  logoImage: {
+    width: 56,
+    height: 56,
   },
   badgeContainer: {
     alignItems: 'center',
