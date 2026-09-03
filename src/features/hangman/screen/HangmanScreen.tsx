@@ -88,13 +88,11 @@ export function HangmanScreen() {
                             }
                             
                             const isGuessed = guessedLetters.has(char);
-                            const showChar = isGuessed || status === 'lost';
-                            const isMissed = !isGuessed && status === 'lost';
 
                             return (
-                                <View key={`char-${index}`} style={[styles.letterBox, isMissed && styles.letterBoxMissed]}>
-                                    <Text style={[styles.letter, isMissed && styles.letterMissed]}>
-                                        {showChar ? char : ''}
+                                <View key={`char-${index}`} style={styles.letterBox}>
+                                    <Text style={styles.letter}>
+                                        {isGuessed ? char : ''}
                                     </Text>
                                 </View>
                             );

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { levels } from '../../game/data/levels';
+import { useSound } from '../../game/hooks/useSound';
 
 interface LevelObject {
   id: string;
@@ -23,6 +24,7 @@ interface HangmanState {
 
 export function useHangmanGame() {
   const [gameState, setGameState] = useState<HangmanState | null>(null);
+  const { playWin, playGameOver, playSelectCorrect, playError } = useSound();
 
   const startNewGame = useCallback(() => {
     // Escoger un nivel aleatorio
@@ -65,31 +67,39 @@ export function useHangmanGame() {
     // Si ya la intentó, no hacer nada
     if (gameState.guessedLetters.has(upperLetter)) return;
 
-    setGameState((prev) => {
-      if (!prev) return prev;
+    const isCorrect = gameState.word.includes(upperLetter);
+    const newMistakes = isCorrect ? gameState.mistakes : gameState.mistakes + 1;
+    
+    const newGuessedLetters = new Set(gameState.guessedLetters);
+    newGuessedLetters.add(upperLetter);
 
-      const newGuessedLetters = new Set(prev.guessedLetters);
-      newGuessedLetters.add(upperLetter);
+    // Play feedback sound
+    if (isCorrect) {
+      playSelectCorrect();
+    } else {
+      playError();
+    }
 
-      const isCorrect = prev.word.includes(upperLetter);
-      const newMistakes = isCorrect ? prev.mistakes : prev.mistakes + 1;
+    // Check win condition
+    const isWon = gameState.word.split('').every((char) => char === ' ' || newGuessedLetters.has(char));
+    const isLost = newMistakes >= gameState.maxMistakes;
 
-      // Check win condition
-      const isWon = prev.word.split('').every((char) => char === ' ' || newGuessedLetters.has(char));
-      const isLost = newMistakes >= prev.maxMistakes;
+    let newStatus: 'playing' | 'won' | 'lost' = gameState.status;
+    if (isWon) {
+      newStatus = 'won';
+      playWin();
+    } else if (isLost) {
+      newStatus = 'lost';
+      playGameOver();
+    }
 
-      let newStatus = prev.status;
-      if (isWon) newStatus = 'won';
-      else if (isLost) newStatus = 'lost';
-
-      return {
-        ...prev,
-        guessedLetters: newGuessedLetters,
-        mistakes: newMistakes,
-        status: newStatus,
-      };
+    setGameState({
+      ...gameState,
+      guessedLetters: newGuessedLetters,
+      mistakes: newMistakes,
+      status: newStatus,
     });
-  }, [gameState]);
+  }, [gameState, playWin, playGameOver, playSelectCorrect, playError]);
 
   return {
     gameState,
