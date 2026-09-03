@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Modal, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, Heart, RefreshCw, Eye } from 'lucide-react-native';
@@ -116,31 +116,47 @@ export function HangmanScreen() {
                 transparent
                 animationType="fade"
             >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContent}>
-                        <Text style={[styles.modalTitle, { color: status === 'won' ? '#4ade80' : '#f87171' }]}>
-                            {status === 'won' ? '¡Excelente!' : 'Game Over'}
-                        </Text>
-                        
-                        <TouchableOpacity 
-                            activeOpacity={0.8} 
-                            onPress={status === 'won' ? startNewGame : resetCurrentGame} 
-                            style={styles.nextButton}
+                <Pressable style={styles.modalOverlay}>
+                    <Pressable style={styles.modalContainer} onPress={(e) => e.stopPropagation()}>
+                        <LinearGradient
+                            colors={['#1e1b4b', '#312e81']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={styles.modalGradient}
                         >
-                            <LinearGradient
-                                colors={status === 'won' ? ['#22c55e', '#10b981'] : ['#db2777', '#f43f5e']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                style={styles.nextButtonGradient}
+                            {/* Label superior */}
+                            <Text style={styles.modalLabel}>
+                                {status === 'won' ? 'NIVEL COMPLETADO' : 'JUEGO TERMINADO'}
+                            </Text>
+
+                            {/* Título grande */}
+                            <Text style={[styles.modalTitle, { color: status === 'won' ? '#4ade80' : '#f87171' }]}>
+                                {status === 'won' ? '¡Excelente!' : 'Game Over'}
+                            </Text>
+
+                            <View style={styles.modalDivider} />
+
+                            {/* Botón de acción */}
+                            <TouchableOpacity
+                                activeOpacity={0.8}
+                                onPress={status === 'won' ? startNewGame : resetCurrentGame}
+                                style={styles.nextButton}
                             >
-                                <RefreshCw color="white" size={20} />
-                                <Text style={styles.nextButtonText}>
-                                    {status === 'won' ? 'Siguiente Palabra' : 'Reintentar'}
-                                </Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                                <LinearGradient
+                                    colors={['#6366f1', '#a855f7']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 1 }}
+                                    style={styles.nextButtonGradient}
+                                >
+                                    <RefreshCw color="white" size={18} />
+                                    <Text style={styles.nextButtonText}>
+                                        {status === 'won' ? 'Siguiente Palabra' : 'Reintentar'}
+                                    </Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                    </Pressable>
+                </Pressable>
             </Modal>
         </View>
     );
@@ -247,46 +263,65 @@ const styles = StyleSheet.create({
     },
     modalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
     },
-    modalContent: {
-        backgroundColor: '#1e293b',
-        borderRadius: 24,
-        padding: 32,
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: 320,
-        borderWidth: 1,
+    modalContainer: {
+        width: '85%',
+        maxWidth: 400,
+        borderRadius: 20,
+        overflow: 'hidden',
         borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.3,
         shadowRadius: 20,
         elevation: 10,
     },
+    modalGradient: {
+        padding: 28,
+        alignItems: 'center',
+    },
+    modalLabel: {
+        color: '#bec9d8',
+        fontSize: 12,
+        fontWeight: '700',
+        letterSpacing: 1.5,
+        textTransform: 'uppercase',
+        marginBottom: 12,
+    },
     modalTitle: {
-        fontSize: 32,
+        fontSize: 36,
         fontWeight: '900',
-        marginBottom: 24,
         textAlign: 'center',
+        marginBottom: 16,
+    },
+    modalDivider: {
+        width: 40,
+        height: 4,
+        backgroundColor: '#6366f1',
+        borderRadius: 2,
+        marginBottom: 28,
     },
     nextButton: {
         borderRadius: 16,
         overflow: 'hidden',
+        width: '100%',
     },
     nextButtonGradient: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 14,
+        justifyContent: 'center',
+        paddingVertical: 16,
         paddingHorizontal: 24,
         gap: 12,
     },
     nextButtonText: {
         color: 'white',
-        fontSize: 18,
-        fontWeight: '800',
+        fontSize: 16,
+        fontWeight: 'bold',
+        letterSpacing: 0.5,
     },
 });
