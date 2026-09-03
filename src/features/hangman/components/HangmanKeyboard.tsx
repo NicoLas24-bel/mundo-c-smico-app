@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
+    bottom: 25
   },
   row: {
     flexDirection: 'row',
