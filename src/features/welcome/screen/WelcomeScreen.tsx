@@ -21,11 +21,11 @@ export function WelcomeScreen() {
         }),
         Animated.timing(pulse, {
           toValue: 1,
-          duration: 2000,
+          duration: 5000,
           easing: Easing.in(Easing.quad),
           useNativeDriver: true,
         }),
-        Animated.delay(1000),
+        Animated.delay(0),
         Animated.timing(pulse, {
           toValue: 1.75,
           duration: 2000,
@@ -34,11 +34,11 @@ export function WelcomeScreen() {
         }),
         Animated.timing(pulse, {
           toValue: 1,
-          duration: 2000,
+          duration: 5000,
           easing: Easing.in(Easing.quad),
           useNativeDriver: true,
         }),
-        Animated.delay(2000),
+        Animated.delay(0),
       ])
     );
     heartbeat.start();
