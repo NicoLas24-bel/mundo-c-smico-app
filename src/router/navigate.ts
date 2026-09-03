@@ -7,5 +7,7 @@ export const navigate = {
   toWelcome: () => router.replace(Routes.welcome),
   toMenu: () => router.push(Routes.menu),
   toSettings: () => router.push(Routes.settings),
+  toGameSelection: () => router.push(Routes.gameSelection),
+  toHangman: () => router.push(Routes.hangman),
   back: () => router.back(),
 };

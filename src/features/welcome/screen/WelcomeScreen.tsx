@@ -47,7 +47,7 @@ export function WelcomeScreen() {
 
   const handleStart = () => {
     playButton();
-    navigate.toMenu();
+    navigate.toGameSelection();
   };
 
   const handleSettings = () => {
