@@ -2,6 +2,8 @@
 
 > **Aplicación móvil educativa** para aprender vocabulario en inglés de forma interactiva, gamificada y divertida. Diseñada para niños y adultos que quieran expandir su léxico en inglés a través del juego.
 
+🌐 **Sitio web oficial:** [www.mundocosmico.cl](https://www.mundocosmico.cl/)
+
 ---
 
 ## 🎯 Idea Principal
@@ -192,4 +194,5 @@ Este proyecto está bajo la licencia incluida en el archivo [LICENSE](./LICENSE)
 
 ---
 
-<p align="center">© mundocosmico.cl — Hecho con ❤️ para aprender inglés jugando</p>
+<p align="center">© mundocosmico.cl — Hecho con ❤️ para aprender inglés jugando<br/>
+<a href="https://www.mundocosmico.cl/">🌐 www.mundocosmico.cl</a></p>
