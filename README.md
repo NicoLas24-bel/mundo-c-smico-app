@@ -1,56 +1,195 @@
-# Welcome to your Expo app 👋
+# 🌌 Mundo Cósmico — Aprendo Inglés Jugando
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **Aplicación móvil educativa** para aprender vocabulario en inglés de forma interactiva, gamificada y divertida. Diseñada para niños y adultos que quieran expandir su léxico en inglés a través del juego.
 
-## Get started
+---
 
-1. Install dependencies
+## 🎯 Idea Principal
 
-   ```bash
-   npm install
-   ```
+**Mundo Cósmico** convierte el aprendizaje del inglés en una aventura. En lugar de memorizar listas de palabras, el jugador explora **escenarios ilustrados del mundo real** (habitaciones, parques, supermercados, aeropuertos…) e **interactúa con los objetos** que aparecen en ellos, asociando visualmente cada palabra en inglés con su representación concreta en el mundo real.
 
-2. Start the app
+La app combina dos modalidades de juego:
 
-   ```bash
-   npx expo start
-   ```
+| Modo | Descripción |
+|---|---|
+| 🔍 **Encuentra el Objeto** | Se muestra una escena ilustrada y una lista de palabras en inglés. El jugador selecciona una palabra y toca el objeto correcto dentro de la imagen. |
+| 🪢 **El Ahorcado** | Juego clásico del ahorcado adaptado al vocabulario inglés. El jugador adivina letras para descubrir la palabra oculta antes de agotar sus vidas. |
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🕹️ ¿Cómo funciona?
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Flujo de la aplicación
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+Splash → Pantalla de Bienvenida → Selección de Juego
+                                       ├── Encuentra el Objeto → Dashboard del Juego
+                                       └── El Ahorcado
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 🔍 Modo: Encuentra el Objeto
 
-### Other setup steps
+1. El jugador ve un **escenario ilustrado** (ej.: un dormitorio, una cocina, un parque).
+2. En la parte inferior aparece una **lista de palabras en inglés** correspondientes a objetos dentro de la imagen.
+3. El jugador selecciona una palabra y luego **toca el área** de la imagen donde se encuentra ese objeto.
+4. Si acierta, el objeto queda marcado con ✅ y se reproduce un sonido de acierto.
+5. Si falla, suma un **error** (máximo 3 errores antes de perder).
+6. Al encontrar todos los objetos, **avanza al siguiente nivel**.
+7. El progreso se **guarda automáticamente** para poder continuar en otra sesión.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+**Características extra del modo:**
+- ⏱️ **Temporizador opcional** — configurable desde Ajustes.
+- ⭐ **Sistema de estrellas** — se otorgan según el tiempo restante al completar el nivel.
+- 🔊 **Efectos de sonido** — aciertos, errores, completar nivel y victoria general.
+- ⏸️ **Menú de pausa** — accesible con el botón físico "atrás" de Android.
+- 📖 **Modal de instrucciones** — aparece al iniciar el juego por primera vez.
+- 💬 **Detalle de palabra** — toca una palabra encontrada para ver su traducción al español.
 
-## Learn more
+### 🪢 Modo: El Ahorcado
 
-To learn more about developing your project with Expo, look at the following resources:
+El clásico juego del ahorcado con vocabulario en inglés. El jugador elige letras desde un teclado virtual para descubrir la palabra oculta. El dibujo del ahorcado se construye progresivamente con cada error cometido.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 🗺️ Niveles disponibles
 
-Join our community of developers creating universal apps.
+La app incluye **15 escenarios** progresivos organizados por dificultad:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Dificultad | Escenarios |
+|---|---|
+| 🟢 **Fácil** | Bedroom, Park, Classroom, Living Room, Bathroom |
+| 🟡 **Medio** | Kitchen, Street, Supermarket, Restaurant, Hospital |
+| 🔴 **Difícil** | Beach, Museum, Gym, Mechanic, Airport |
+
+Cada escenario contiene entre **6 y 10 objetos** a encontrar, con su nombre en inglés y traducción al español.
+
+---
+
+## ✨ Características Generales
+
+- 🌍 Vocabulario en **inglés con traducción al español**
+- 📱 Diseño **dark mode** con gradientes y glassmorphism
+- 🔒 **Progreso persistente** guardado localmente (AsyncStorage)
+- 🔓 **Desbloqueo secuencial** de niveles
+- ⚙️ **Pantalla de configuraciones** (activar/desactivar temporizador, etc.)
+- 🎨 Interfaz animada con micro-animaciones y transiciones suaves
+- 📳 Compatible con **Android e iOS**
+
+---
+
+## 🏗️ Arquitectura del Proyecto
+
+El proyecto usa una arquitectura modular organizada por **features** (características), cada una completamente autocontenida:
+
+```
+src/
+├── app/                    # Rutas de Expo Router (file-based routing)
+│   ├── _layout.tsx
+│   ├── index.tsx           # Splash / entrada
+│   ├── welcome.tsx
+│   ├── game-selection.tsx
+│   ├── dashboard.tsx       # Juego: Encuentra el Objeto
+│   ├── hangman.tsx
+│   ├── menu.tsx
+│   └── settings.tsx
+│
+├── features/               # Módulos por funcionalidad
+│   ├── splash/
+│   ├── welcome/
+│   ├── game-selection/
+│   ├── game/               # Lógica principal del juego
+│   │   ├── components/     # GameBoard, WordList, GameStatus, GameTimer…
+│   │   ├── data/           # levels.ts — definición de todos los niveles y objetos
+│   │   ├── hooks/          # useGameState, useGameTimer, useSound
+│   │   └── utils/          # storage, stars
+│   ├── hangman/
+│   ├── dashboard/
+│   ├── menu/
+│   └── settings/
+│
+├── router/                 # Navegación centralizada (navigate.to*)
+└── shared/                 # Componentes y utilidades compartidas
+```
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Tecnología | Uso |
+|---|---|
+| [Expo SDK 57](https://expo.dev) | Framework base para React Native |
+| [React Native 0.86](https://reactnative.dev) | Motor de la app |
+| [Expo Router](https://expo.github.io/router) | Navegación basada en archivos |
+| [React Native Reanimated 4](https://docs.swmansion.com/react-native-reanimated/) | Animaciones de alto rendimiento |
+| [expo-linear-gradient](https://docs.expo.dev/versions/v57.0.0/sdk/linear-gradient/) | Gradientes visuales |
+| [expo-audio](https://docs.expo.dev/versions/v57.0.0/sdk/audio/) | Efectos de sonido |
+| [expo-glass-effect](https://docs.expo.dev/versions/v57.0.0/sdk/glass-effect/) | Efectos de glassmorphism |
+| [AsyncStorage](https://react-native-async-storage.github.io/async-storage/) | Persistencia local del progreso |
+| [lucide-react-native](https://lucide.dev) | Iconografía |
+| TypeScript | Tipado estático |
+
+---
+
+## 🚀 Instalación y ejecución
+
+### Prerrequisitos
+
+- Node.js 18+
+- npm o yarn
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+- Para Android: Android Studio con emulador configurado, o dispositivo físico con Expo Go
+- Para iOS: Xcode (solo macOS)
+
+### Pasos
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/NicoLas24-bel/mundo-c-smico-app.git
+cd mundo-c-smico-app
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Iniciar el servidor de desarrollo
+npm start
+
+# O directamente en Android:
+npm run android
+
+# O en iOS:
+npm run ios
+```
+
+---
+
+## 📂 Scripts disponibles
+
+| Script | Descripción |
+|---|---|
+| `npm start` | Inicia el servidor de desarrollo Expo |
+| `npm run android` | Compila y lanza en Android |
+| `npm run ios` | Compila y lanza en iOS |
+| `npm run web` | Lanza en navegador web |
+| `npm run lint` | Ejecuta ESLint |
+
+---
+
+## 🌿 Ramas del proyecto
+
+| Rama | Descripción |
+|---|---|
+| `master` | Versión estable de producción |
+| `develop` | Rama de integración de nuevas features |
+| `feat/*` | Nuevas funcionalidades en desarrollo |
+| `feature/*` | Nuevas pantallas o módulos |
+| `fix/*` | Correcciones de bugs |
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia incluida en el archivo [LICENSE](./LICENSE).
+
+---
+
+<p align="center">© mundocosmico.cl — Hecho con ❤️ para aprender inglés jugando</p>
